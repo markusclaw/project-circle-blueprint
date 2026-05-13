@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Circle Blueprint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #fafafa;
+        }
+        header {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        section {
+            background: #fff;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #000;
+        }
+        section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        section h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+        section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        section ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        section li {
+            margin-bottom: 0.5rem;
+        }
+        .philosophy {
+            border-left-color: #8b5cf6;
+        }
+        .problem {
+            border-left-color: #ef4444;
+        }
+        .solution {
+            border-left-color: #22c55e;
+        }
+        .technical {
+            border-left-color: #3b82f6;
+        }
+        .phases {
+            border-left-color: #f59e0b;
+        }
+        .design {
+            border-left-color: #ec4899;
+        }
+        .data {
+            border-left-color: #06b6d4;
+        }
+        .highlight {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-style: italic;
+            color: #374151;
+        }
+        code {
+            background: #f3f4f6;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Menlo', 'Monaco', monospace;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>⭕ Project Circle</h1>
+        <p>The Anti-Dating App: AI-Powered Connection Through Self-Knowledge</p>
+    </header>
+
+    <div class="container">
+        <!-- VISION & PHILOSOPHY -->
+        <section class="philosophy">
+            <h2>Vision & Philosophy</h2>
+            <p><strong>Project Circle</strong> is a connection platform that inverts the dating app paradigm. Instead of infinite swiping, algorithmic theater, and monetized loneliness, Project Circle uses AI to help users <em>discover themselves</em> and then <em>find meaningful connections within their natural circles</em>.</p>
+            
+            <h3>Core Thesis</h3>
+            <p>Modern dating apps are engagement machines, not matching systems. They profit from keeping users single, swiping endlessly through curated fiction. This creates:</p>
+            <ul>
+                <li>Fatigue and cynicism around connection</li>
+                <li>Performative profiles that favor the most "developed" (often fake)</li>
+                <li>No reward for authenticity</li>
+                <li>Endless choice paralysis instead of meaningful matching</li>
+            </ul>
+            <p><strong>Project Circle fixes this</strong> by treating the app as a tool for <em>self-knowledge first, connection second</em>. We help users understand themselves, then connect them with people who actually align—using degrees of separation as a map, not random cards.</p>
+            
+            <h3>The Name: Circles</h3>
+            <p>In real life, we date, marry, befriend, and do business within our natural circles (3-4 degrees of separation from us). Project Circle formalizes this insight: instead of infinite undifferentiated swiping, the app <em>builds your circles of compatible people</em>, making degrees of separation visible and intentional.</p>
+            
+            <h3>Jungian Foundation</h3>
+            <p>Project Circle is built on Carl Jung's personality framework (via MBTI). We treat personality types not as fixed boxes, but as a language for self-understanding and compatibility. Users evolve; their profiles evolve. The app learns them through interactions, not just a static bio.</p>
+        </section>
+
+        <!-- PROBLEM STATEMENT -->
+        <section class="problem">
+            <h2>The Problem: Why Dating Apps Suck</h2>
+            <h3>Current Landscape Issues</h3>
+            <ul>
+                <li><strong>Monopoly economics:</strong> Most apps owned by same parent company (Match Group), same philosophy: keep people single, extract maximum revenue</li>
+                <li><strong>Swiping is theater:</strong> Profiles are curated fiction. Only over-developed, "scammy" profiles succeed</li>
+                <li><strong>No authenticity reward:</strong> Real people get buried. Performative people thrive</li>
+                <li><strong>Engagement over matching:</strong> Design optimized for time-in-app and premium conversions, not actual matches</li>
+                <li><strong>Fatigue and cynicism:</strong> Users hate the process. They know it's broken</li>
+            </ul>
+            
+            <div class="highlight">
+                <strong>Validation:</strong> User interviews confirm this. Most people hate dating apps despite using them. They see through the design, recognize the monetization trap, and feel exhausted by the swiping treadmill.
+            </div>
+        </section>
+
+        <!-- SOLUTION -->
+        <section class="solution">
+            <h2>The Solution: Project Circle</h2>
+            <h3>Core Features (By Principle)</h3>
+            
+            <h4>1. Evolving Profiles Through Conversation</h4>
+            <p>Instead of a frozen bio + photos, profiles <em>build over time</em> through interaction. AI learns the user through:</p>
+            <ul>
+                <li>Onboarding session (basic info, initial personality assessment)</li>
+                <li>Guided conversation flows (AI asks questions, learns their values, style, goals)</li>
+                <li>Interaction analysis (how they talk, what matters to them, their patterns)</li>
+                <li>Continuous refinement (profile updates as user reveals more)</li>
+            </ul>
+
+            <h4>2. AI-Powered Matching (Not Swiping)</h4>
+            <p>No endless cards. Instead:</p>
+            <ul>
+                <li>AI analyzes personality (MBTI framework), values, lifestyle, goals</li>
+                <li>System calculates compatibility (not just type match, but deeper alignment)</li>
+                <li>Presents meaningful connections with reasoning ("You both value authenticity + adventure")</li>
+                <li>Reduces fatigue: quality over quantity</li>
+            </ul>
+
+            <h4>3. Degrees of Separation (Circles)</h4>
+            <p>Makes social proximity visible:</p>
+            <ul>
+                <li><strong>Degree 1:</strong> Direct connections (people you match with)</li>
+                <li><strong>Degree 2:</strong> Friends of friends (people in your circles' networks)</li>
+                <li><strong>Degree 3-4:</strong> Extended circles (growing proximity-aware recommendations)</li>
+                <li>Users see <em>why</em> someone is suggested (degree + compatibility reason)</li>
+            </ul>
+
+            <h4>4. Self-Knowledge as Primary Output</h4>
+            <p>Helping users understand themselves is as valuable as finding matches:</p>
+            <ul>
+                <li>Personality insights delivered over time</li>
+                <li>Values clarification through interaction</li>
+                <li>Compatibility patterns users can learn from</li>
+                <li>Growth-oriented feedback (not judgment)</li>
+            </ul>
+
+            <h4>5. Minimal, Introspective Design</h4>
+            <p>Visual language should feel:</p>
+            <ul>
+                <li><strong>Calm:</strong> Opposite of frantic swiping</li>
+                <li><strong>Intentional:</strong> Every interaction meaningful</li>
+                <li><strong>Introspective:</strong> Like uncovering, not performing</li>
+                <li><strong>Premium:</strong> Sophisticated, not cluttered</li>
+                <li><strong>Human-centric:</strong> Warm, not mechanical</li>
+            </ul>
+        </section>
+
+        <!-- DATA MODEL -->
+        <section class="data">
+            <h2>Data Model: The Personality Engine</h2>
+            
+            <h3>Core Dimensions</h3>
+            <p><strong>Personality Profile (Jungian/MBTI Framework):</strong></p>
+            <ul>
+                <li>Extraversion ↔ Introversion (E/I)</li>
+                <li>Sensing ↔ Intuition (S/N)</li>
+                <li>Thinking ↔ Feeling (T/F)</li>
+                <li>Judging ↔ Perceiving (J/P)</li>
+                <li><strong>Result:</strong> 16 types as a lens, not a cage</li>
+            </ul>
+
+            <h3>Extended Dimensions</h3>
+            <ul>
+                <li><strong>Values:</strong> What matters (family, adventure, creativity, stability, etc.)</li>
+                <li><strong>Lifestyle:</strong> How they live (urban/rural, active/reflective, social/solitary)</li>
+                <li><strong>Life Stage:</strong> Current phase (career-building, settling down, exploring, etc.)</li>
+                <li><strong>Interests & Goals:</strong> What they do, where they're headed</li>
+                <li><strong>Communication Style:</strong> How they talk, connect, process conflict</li>
+            </ul>
+
+            <h3>Interaction Tracking</h3>
+            <p>AI learns through:</p>
+            <ul>
+                <li>Conversation patterns (tone, depth, reciprocity)</li>
+                <li>Response authenticity (consistency over time)</li>
+                <li>Connection outcomes (mutual interest, conversation quality)</li>
+                <li>Feedback loops (user confirms/corrects profile insights)</li>
+            </ul>
+
+            <h3>Compatibility Algorithm (High-Level)</h3>
+            <p><code>Compatibility = Type Resonance + Values Alignment + Lifestyle Fit + Growth Potential</code></p>
+            <ul>
+                <li><strong>Type Resonance:</strong> Complementary types, not just matches (e.g., INTJ × ENFP can work)</li>
+                <li><strong>Values Alignment:</strong> Core values must overlap (even if interests differ)</li>
+                <li><strong>Lifestyle Fit:</strong> Life pace, location, social needs align</li>
+                <li><strong>Growth Potential:</strong> Can they grow together?</li>
+            </ul>
+        </section>
+
+        <!-- TECHNICAL ARCHITECTURE -->
+        <section class="technical">
+            <h2>Technical Architecture</h2>
+            
+            <h3>Stack (Phased Approach)</h3>
+            <ul>
+                <li><strong>Frontend:</strong> React/Next.js (web) + React Native (mobile) — minimal, intentional UI</li>
+                <li><strong>Backend:</strong> Node.js/Express or Python (personality engine + matching logic)</li>
+                <li><strong>Database:</strong> PostgreSQL (user profiles, interaction history, compatibility scores)</li>
+                <li><strong>AI/LLM:</strong> OpenAI/Claude API (conversation flows, profile generation, matching reasoning)</li>
+                <li><strong>Real-time:</strong> WebSocket (live chat, notifications)</li>
+                <li><strong>Infrastructure:</strong> Cloud (AWS/GCP/Cloudflare) — scalable, low-latency</li>
+            </ul>
+
+            <h3>Core Services</h3>
+            <ul>
+                <li><strong>Auth Service:</strong> Account creation, identity verification</li>
+                <li><strong>Personality Engine:</strong> MBTI assessment, profile building, interaction learning</li>
+                <li><strong>Matching Engine:</strong> Compatibility scoring, circle detection, recommendation ranking</li>
+                <li><strong>Conversation Service:</strong> AI-guided interactions, profile refinement</li>
+                <li><strong>Messaging Service:</strong> User-to-user communication, moderation</li>
+                <li><strong>Analytics Service:</strong> User behavior, matching quality, feedback loops</li>
+            </ul>
+
+            <h3>API-First Architecture</h3>
+            <p>Clean separation: Frontend consumes well-defined APIs. Allows web + mobile + future platforms without rebuilding business logic.</p>
+        </section>
+
+        <!-- PHASES -->
+        <section class="phases">
+            <h2>Phased Roadmap</h2>
+            
+            <h3>Phase 0: Foundation (Weeks 1-2)</h3>
+            <ul>
+                <li>Design system locked (minimal aesthetic)</li>
+                <li>Data model finalized (personality dimensions, compatibility scoring)</li>
+                <li>Tech stack chosen and scaffolded</li>
+                <li>Team alignment on vision</li>
+            </ul>
+
+            <h3>Phase 1: Core Onboarding & Profiling (Weeks 3-8)</h3>
+            <ul>
+                <li>User auth (signup, identity)</li>
+                <li>MBTI assessment flow</li>
+                <li>Initial profile creation (AI interviews user, builds personality picture)</li>
+                <li>Basic profile display</li>
+            </ul>
+
+            <h3>Phase 2: Matching Engine (Weeks 9-14)</h3>
+            <ul>
+                <li>Compatibility scoring algorithm</li>
+                <li>Circle detection (degrees of separation)</li>
+                <li>Recommendation ranking</li>
+                <li>Match presentation (not swiping—curated, meaningful)</li>
+            </ul>
+
+            <h3>Phase 3: Messaging & Interaction (Weeks 15-20)</h3>
+            <ul>
+                <li>User-to-user messaging</li>
+                <li>Interaction tracking (AI learns from conversations)</li>
+                <li>Profile updates based on interactions</li>
+                <li>Feedback loops</li>
+            </ul>
+
+            <h3>Phase 4: Profile Evolution & Learning (Weeks 21-26)</h3>
+            <ul>
+                <li>Continuous personality refinement</li>
+                <li>AI-guided discovery sessions (deeper self-knowledge)</li>
+                <li>Compatibility insights delivery</li>
+                <li>Matching quality improvement</li>
+            </ul>
+
+            <h3>Phase 5: Scale & Moderation (Ongoing)</h3>
+            <ul>
+                <li>Safety/moderation systems</li>
+                <li>Community guidelines</li>
+                <li>Scaling to larger user base</li>
+                <li>Regional expansion</li>
+            </ul>
+
+            <h3>Phase 6: Monetization & Sustainability (Later)</h3>
+            <ul>
+                <li>Revenue model (not determined yet—could be subscription, freemium, etc.)</li>
+                <li>Ensuring model aligns with core mission (no engagement traps)</li>
+            </ul>
+        </section>
+
+        <!-- DESIGN LANGUAGE -->
+        <section class="design">
+            <h2>Design Language</h2>
+            
+            <h3>Principles</h3>
+            <ul>
+                <li><strong>Minimal:</strong> Only what's necessary. Remove noise.</li>
+                <li><strong>Introspective:</strong> Feels like self-discovery, not performance</li>
+                <li><strong>Intentional:</strong> Every interaction is meaningful</li>
+                <li><strong>Calm:</strong> Opposite of frantic/addictive design</li>
+                <li><strong>Premium:</strong> Sophisticated, not cluttered</li>
+                <li><strong>Human-centered:</strong> Warm, not mechanical</li>
+            </ul>
+
+            <h3>Visual Direction</h3>
+            <ul>
+                <li><strong>Color:</strong> Muted neutrals + one accent color (calm, not loud)</li>
+                <li><strong>Typography:</strong> Clean, readable sans-serif with generous whitespace</li>
+                <li><strong>Interaction:</strong> Smooth, unhurried transitions</li>
+                <li><strong>Metaphor:</strong> Uncovering layers, not swiping cards</li>
+            </ul>
+
+            <h3>Key Interactions</h3>
+            <ul>
+                <li><strong>Onboarding:</strong> Guided conversation, not a form dump</li>
+                <li><strong>Profile:</strong> Living document, evolves over time</li>
+                <li><strong>Matching:</strong> Curated suggestions with reasoning ("Here's why we think you'd connect")</li>
+                <li><strong>Messaging:</strong> Natural, focused conversations</li>
+                <li><strong>Insights:</strong> Personality growth & compatibility patterns delivered thoughtfully</li>
+            </ul>
+        </section>
+
+        <!-- USER TARGETING -->
+        <section>
+            <h2>User Targeting (Phase 1)</h2>
+            <h3>Primary Audience</h3>
+            <ul>
+                <li><strong>Age:</strong> 18+ (starting with young adults 22-35)</li>
+                <li><strong>Mindset:</strong> Tired of traditional dating apps, seeking authentic connections</li>
+                <li><strong>Values:</strong> Self-knowledge, authenticity, meaningful connection</li>
+                <li><strong>Tech comfort:</strong> Digital-native, open to AI integration</li>
+            </ul>
+            
+            <h3>Geographic Launch</h3>
+            <p><strong>Phase 1a:</strong> San Diego / Southern California region (founder's home market, tightly knit, good for early testing)</p>
+            <p><strong>Phase 1b:</strong> Expand regionally (California, Southwest)</p>
+            <p><strong>Phase 2:</strong> National / Global (as community grows)</p>
+            
+            <h3>Secondary Audiences (Later Phases)</h3>
+            <ul>
+                <li>Anyone seeking meaningful professional/business networks</li>
+                <li>People building communities around shared values</li>
+                <li>Users interested in personal growth + connection</li>
+            </ul>
+        </section>
+
+        <!-- SUCCESS METRICS -->
+        <section>
+            <h2>Success Metrics</h2>
+            <h3>Phase 0-1 Metrics</h3>
+            <ul>
+                <li>Design system completeness</li>
+                <li>Tech stack viability</li>
+                <li>MBTI assessment accuracy</li>
+                <li>Onboarding completion rate</li>
+            </ul>
+
+            <h3>Phase 2-3 Metrics</h3>
+            <ul>
+                <li>Matching quality (user satisfaction with suggestions)</li>
+                <li>Message initiation rate (meaningful connections leading to conversation)</li>
+                <li>Conversation depth (message count, interaction quality)</li>
+                <li>Profile accuracy improvement over time</li>
+            </ul>
+
+            <h3>Long-term Metrics</h3>
+            <ul>
+                <li>Successful real-world connections (users report dating/relationships from the app)</li>
+                <li>Repeat engagement (users return, not one-time)</li>
+                <li>Community health (low toxicity, high authenticity)</li>
+                <li>User growth (virality, word-of-mouth)</li>
+            </ul>
+        </section>
+
+        <!-- NEXT STEPS -->
+        <section>
+            <h2>Next Steps</h2>
+            <ol>
+                <li><strong>Design System:</strong> Lock visual language, component library</li>
+                <li><strong>Personality Engine Spec:</strong> Detailed MBTI assessment flow + compatibility algorithm</li>
+                <li><strong>Data Model Finalization:</strong> Database schema for profiles, interactions, matches</li>
+                <li><strong>Tech Stack Proof of Concept:</strong> Validate chosen technologies</li>
+                <li><strong>MVP Scope Definition:</strong> Decide exactly what Phase 1 ships (auth + profiling + basic matching?)</li>
+                <li><strong>Team Assembly:</strong> Who builds what?</li>
+                <li><strong>Initial User Testing:</strong> Get real feedback early and often</li>
+            </ol>
+        </section>
+    </div>
+
+    <footer>
+        <p>Project Circle Blueprint | Created May 2026 | Built by Markus Corvus</p>
+    </footer>
+</body>
+</html>
