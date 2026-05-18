@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Circle Blueprint — Trust-Centered Dating App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <style>
+    :root {
+      --circle-black: #1A1A1A;
+      --circle-white: #FFFFFF;
+      --emerald: #2D6A4F;
+      --emerald-dark: #1F4A39;
+      --warm-neutral: #D4B5A0;
+      --text-secondary: #6B6B6B;
+      --text-tertiary: #A0A0A0;
+      --border: #E8E8E8;
+      --surface: #F5F5F5;
+    }
+
+    * { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Avenir', sans-serif; }
+    body { color: var(--circle-black); background: var(--circle-white); line-height: 1.6; }
+    h1, h2, h3, h4 { font-weight: 700; }
+    h1 { font-size: 48px; line-height: 56px; }
+    h2 { font-size: 36px; line-height: 44px; margin-top: 32px; margin-bottom: 16px; }
+    h3 { font-size: 24px; line-height: 32px; margin-top: 24px; margin-bottom: 12px; }
+    h4 { font-size: 18px; margin-top: 16px; margin-bottom: 8px; }
+
+    .sidebar {
+      position: fixed; left: 0; top: 0; width: 300px; height: 100vh;
+      background: var(--surface); border-right: 1px solid var(--border);
+      overflow-y: auto; padding: 24px 0; z-index: 40;
+    }
+
+    .sidebar-header { padding: 0 20px 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+    .sidebar-header h1 { font-size: 18px; margin: 0; color: var(--emerald); }
+    .sidebar-header p { font-size: 12px; color: var(--text-tertiary); margin: 4px 0 0 0; }
+
+    .sidebar-nav { list-style: none; padding: 0; margin: 0; }
+    .sidebar-nav > li { margin: 0; }
+    .sidebar-nav a {
+      display: block; padding: 10px 20px; color: var(--circle-black); text-decoration: none;
+      font-size: 14px; border-left: 3px solid transparent; transition: all 150ms ease-out;
+    }
+    .sidebar-nav a:hover { background: rgba(45, 106, 79, 0.08); color: var(--emerald); }
+    .sidebar-nav a.active { background: rgba(45, 106, 79, 0.12); border-left-color: var(--emerald); color: var(--emerald); font-weight: 600; }
+
+    .main-content { margin-left: 300px; min-height: 100vh; padding: 0; }
+    .content-header {
+      position: sticky; top: 0; background: var(--circle-white);
+      border-bottom: 1px solid var(--border); padding: 16px 32px;
+      display: flex; gap: 16px; align-items: center; z-index: 30;
+    }
+
+    .search-container { flex: 1; max-width: 500px; position: relative; }
+    .search-input {
+      width: 100%; padding: 12px 16px; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 14px; transition: all 150ms ease-out;
+    }
+    .search-input:focus { outline: none; border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1); }
+
+    .search-results {
+      position: absolute; top: 100%; left: 0; right: 0; background: var(--circle-white);
+      border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px;
+      max-height: 400px; overflow-y: auto; z-index: 50; margin-top: -1px;
+    }
+
+    .search-result-item {
+      padding: 12px 16px; border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: all 150ms ease-out;
+    }
+    .search-result-item:hover { background: var(--surface); }
+    .search-result-item strong { color: var(--emerald); display: block; font-size: 13px; margin-bottom: 4px; }
+    .search-result-item span { color: var(--text-secondary); font-size: 12px; }
+
+    .content-body { padding: 48px 64px; max-width: 900px; margin: 0 auto; }
+    .content-body > h1:first-child { margin-top: 0; }
+
+    .section-nav { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .section-nav button {
+      padding: 6px 12px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 150ms ease-out;
+    }
+    .section-nav button.active { background: var(--emerald); color: var(--circle-white); border-color: var(--emerald); }
+    .section-nav button:hover { border-color: var(--emerald); }
+
+    .page-number {
+      position: fixed; bottom: 20px; right: 20px; font-size: 12px;
+      color: var(--text-tertiary); background: var(--surface);
+      padding: 8px 12px; border: 1px solid var(--border); border-radius: 4px;
+    }
+
+    code { background: var(--surface); padding: 2px 6px; border-radius: 3px; font-size: 13px; color: var(--emerald); }
+    pre { background: var(--surface); padding: 16px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin: 16px 0; }
+    pre code { background: none; padding: 0; color: var(--circle-black); }
+
+    .breadcrumb { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; }
+    .breadcrumb span { color: var(--text-tertiary); }
+
+    @media (max-width: 768px) {
+      .sidebar { width: 250px; }
+      .main-content { margin-left: 0; }
+      .content-body { padding: 24px 20px; }
+      .sidebar.hidden { display: none; }
+      .sidebar-toggle { display: flex; }
+    }
+
+    .sidebar-toggle {
+      display: none; gap: 8px; align-items: center; background: none;
+      border: none; cursor: pointer; color: var(--circle-black); font-size: 14px;
+    }
+    .sidebar-toggle:hover { color: var(--emerald); }
+  </style>
+</head>
+<body>
+  <div id="app" class="flex">
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1>Project Circle</h1>
+        <p>v3.3 Blueprint • May 2026</p>
+      </div>
+      <nav class="sidebar-nav" id="sidebarNav"></nav>
+    </div>
+
+    <div class="main-content">
+      <div class="content-header">
+        <button class="sidebar-toggle" id="sidebarToggle">☰ Menu</button>
+        <div class="search-container">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search blueprint..." autocomplete="off">
+          <div id="searchResults" class="search-results" style="display: none;"></div>
+        </div>
+      </div>
+
+      <div class="content-body" id="content">
+        <h1>Project Circle Blueprint</h1>
+        <p style="color: var(--text-secondary); font-size: 18px; margin-top: 0;">Trust-Centered Dating App — Strategic Blueprint v3.3</p>
+        <p style="color: var(--text-secondary);">A comprehensive system document covering product strategy, AI integration, design direction, resource planning, and monetization for Project Circle.</p>
+        <hr style="margin: 32px 0; border: none; border-top: 1px solid var(--border);">
+        <div class="section-nav" id="sectionNav"></div>
+      </div>
+
+      <div class="page-number" id="pageNumber">Page 1</div>
+    </div>
+  </div>
+
+  <script>
+    const blueprint = [
+      { id: 'summary', title: 'Executive Summary', page: 1, content: '# Executive Summary\n\nProject Circle is a trust-centered introduction platform built around self-knowledge, intentionality, and socially grounded human connection.\n\n**Core Thesis:** People are exhausted by algorithmic attention economies disguised as connection tools. Circle inverts that model.\n\n## What Circle Does\n- Understand yourself deeply (Jungian/MBTI/Big Five frameworks)\n- Clarify values and relationship patterns\n- Build trusted social context\n- Receive curated introductions grounded in compatibility and social proximity\n\nThis is not a speed-dating app. It\'s a self-discovery platform where connection is the byproduct of intentional self-knowledge.' },
+      { id: 'principles', title: 'Core Product Principles', page: 3, content: '# Core Product Principles\n\n**1. Trust Over Engagement** - No infinite swiping, no boosts, no addiction loops\n\n**2. Self-Knowledge First** - Primary output is self-understanding, connection is a byproduct\n\n**3. Human-Centered AI** - Users feel understood, not analyzed\n\n**4. Real-World Connection** - Digital interaction is transitional. App creates healthier real-world relationships\n\n**5. Safety is Infrastructure** - Safety is visual language, interaction pacing, identity verification, moderation, emotional atmosphere\n\n**6. Intentionality Over Scale** - Launch deep not broad. Density > growth rate' },
+      { id: 'design', title: 'Design Direction: The Mirror', page: 11, content: '# Design Direction: "The Mirror"\n\n## Why This Concept Won\n\n**Visual Hook:** Watching personality emerge real-time is the "wow moment"  \n**Brand Coherence:** Concentric circle logo becomes literal personality visualization  \n**Engagement:** Users gain value while building trust  \n**Differentiation:** Hinge/Bumble have nothing like this\n\n## Implementation\n\n**Welcome Screen:** "Discover Your True Reflection" with animated concentric circles  \n**Assessment:** Each answer adds color/width to personality rings. Big Five scores visible live  \n**Results:** Full personality portrait with all 5 colors, MBTI type, narrative interpretation\n\n## Colors\n- Openness: #6B9AC4 (Sky Blue)\n- Conscientiousness: #7BA489 (Sage Green)\n- Extraversion: #E8956F (Warm Coral)\n- Agreeableness: #D4A5A5 (Soft Rose)\n- Emotional Stability: #5B4B8A (Deep Indigo)' },
+      { id: 'ai', title: 'AI/LLM Integration', page: 14, content: '# AI/LLM Integration Architecture\n\nAI in Circle is the operational backbone of personality assessment and longitudinal learning.\n\n## AI Transparency & User Control\n- Users see all conclusions Claude made\n- Users can edit/reject any assessment\n- Request human review for disagreement\n- Curator reassesses within 48 hours\n\n## Phase 1: Assessment Engine\n- Claude API for personality interviews\n- Vector embeddings (1536-dim)\n- PostgreSQL with pgvector for similarity search\n- Phase 1: 100% human review of all matches\n\n## Cost Model\n- Per-user AI cost: ~$0.40-0.50/month\n- Initial assessment: ~$0.30\n- Revenue target: $20/month → 40x margin' },
+      { id: 'roadmap', title: '20-Week Roadmap', page: 17, content: '# Product Roadmap: 20 Weeks\n\n**Phase 0 (Weeks 1-4):** Validation. 30-50 interviews, community selection, monetization proof\n\n**Phase 1a (Weeks 5-8):** MVP Launch. 50 beta users, 100% manual curation. Cost: $1.2k/mo\n\n**Phase 1b (Weeks 9-12):** Growth. 250-300 users, curator dashboard, feedback loops. Cost: $2.8k/mo\n\n**Phase 2 (Weeks 13-16):** Algorithmic Matching. 500-750 users, semi-automated matching. Cost: $5.5k/mo\n\n**Phase 3 (Weeks 17-20+):** Public Beta. 1500-2000+ users, multi-region. Cost: $12-15k/mo' },
+      { id: 'money', title: 'Financials & Monetization', page: 20, content: '# Financial Model\n\n## Pricing\n- Long-term: $19.99/month or $149/year\n- Founding: $14.99/month (early adopters)\n- Student: $5/month (limited intros)\n- B2B: $500/month per team\n\n## Three Segments\n| Segment | Price | Conversion | LTV |\n| Student | $5/mo | 30% | $60 |\n| High-Intent | $20/mo | 50% | $240 |\n| Corporate | $500/mo | 20% | $6,000 |\n\n## Budget: $470k (20 weeks)\n- Personnel: $380k\n- Infrastructure: $12k\n- AI/LLM: $8k\n- Security: $15k\n- Marketing: $30k\n\n## Projections (Week 20)\n- 500 users\n- 300 paid (60%)\n- $3,600 MRR\n- 78% gross margin' },
+      { id: 'metrics', title: 'Success Metrics', page: 24, content: '# Success Metrics & KPIs\n\n## North Star (NOT DAU or time-on-app)\n- Real-world introductions completed\n- Successful real-world meetings\n- Account pause rate (success signal!)\n- Referral rate (≥5% is good)\n- Trust score (average user)\n- Emotional satisfaction (≥8/10)\n- Onboarding completion (≥80%)\n\n## Phase 0 Validation (Week 4 Go/No-Go)\n✓ Users will complete onboarding\n✓ Curated intros feel better than swiping\n✓ Users willing to pay (≥60%)\n✓ Community + early users confirmed\n\n## Phase 1 Validation (Week 8)\n✓ Onboarding ≥80%\n✓ Intros accepted ≥40%\n✓ Real meetings ≥1 per 10 users\n✓ Retention >60%\n✓ Referral ≥5%' },
+      { id: 'appendix', title: 'Appendix & References', page: 26, content: '# Appendix\n\n## Phase 0 Interview Framework (30 Questions)\n\nSection 1: Dating App Fatigue (7Q)\n- Experience with traditional apps?\n- What frustrates you most?\n- Have you quit? Why?\n- What would change your mind?\n- How do you feel about swiping?\n- Do you trust matches?\n- Conversations vs. real dates?\n\nSection 2: Self-Knowledge (6Q)\n- Interested in understanding yourself?\n- MBTI/Big Five/Attachment theory?\n- Complete 15-min assessment?\n- Want personality insights?\n- AI interview comfortable?\n- What makes you feel understood?\n\nSection 3: Pricing (3Q)\n- Would you pay for meaningful matches?\n- What\'s fair price/month?\n- Subscribe or pay-per-match?\n\n## GDPR/CCPA Compliance\n✓ Consent reviewed by counsel\n✓ Export profile (JSON/CSV)\n✓ Request deletion (30-day grace)\n✓ Breach response (<72h notification)\n✓ Data minimization\n✓ Encrypted storage' }
+    ];
+
+    let currentPage = 1;
+    let fuse = null;
+
+    function initNavigation() {
+      const sidebarNav = document.getElementById('sidebarNav');
+      const sectionNav = document.getElementById('sectionNav');
+
+      blueprint.forEach((section) => {
+        const sidebarItem = document.createElement('a');
+        sidebarItem.href = '#';
+        sidebarItem.textContent = section.title;
+        sidebarItem.dataset.id = section.id;
+        sidebarItem.onclick = (e) => {
+          e.preventDefault();
+          loadSection(section.id);
+          document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+          sidebarItem.classList.add('active');
+        };
+        sidebarNav.appendChild(sidebarItem);
+
+        const btn = document.createElement('button');
+        btn.textContent = section.title;
+        btn.dataset.section = section.id;
+        btn.onclick = () => loadSection(section.id);
+        sectionNav.appendChild(btn);
+      });
+
+      document.querySelector('.sidebar-nav a').classList.add('active');
+      document.querySelector('[data-section]').classList.add('active');
+    }
+
+    function loadSection(id) {
+      const section = blueprint.find(s => s.id === id);
+      if (!section) return;
+
+      currentPage = section.page;
+      const contentDiv = document.getElementById('content');
+      const pageNum = document.getElementById('pageNumber');
+      
+      contentDiv.innerHTML = `
+        <div class="breadcrumb">
+          <span>Project Circle Blueprint</span>
+          <span>•</span>
+          <span>${section.title}</span>
+        </div>
+        <div id="sectionContent" style="margin-top: 24px;">${section.content.replace(/\n/g, '<br>')}</div>
+      `;
+      
+      pageNum.textContent = `Page ${currentPage}`;
+      window.scrollTo(0, 0);
+    }
+
+    function initSearch() {
+      const searchData = blueprint.map(section => ({ id: section.id, title: section.title, page: section.page, content: section.content }));
+      fuse = new Fuse(searchData, { keys: ['title', 'content'], threshold: 0.3, minMatchCharLength: 2 });
+
+      const searchInput = document.getElementById('searchInput');
+      const searchResults = document.getElementById('searchResults');
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value;
+        if (!query) { searchResults.style.display = 'none'; return; }
+
+        const results = fuse.search(query).slice(0, 8);
+        if (results.length === 0) {
+          searchResults.innerHTML = '<div style="padding: 12px 16px; color: var(--text-secondary); font-size: 12px;">No results found</div>';
+          searchResults.style.display = 'block';
+          return;
+        }
+
+        searchResults.innerHTML = results.map(result => `
+          <div class="search-result-item" onclick="document.getElementById('searchInput').value = ''; document.getElementById('searchResults').style.display = 'none'; document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active')); document.querySelector('[data-id=\\\"${result.item.id}\\\"]').classList.add('active'); loadSection('${result.item.id}');">
+            <strong>${result.item.title}</strong>
+            <span>Page ${result.item.page}</span>
+          </div>
+        `).join('');
+        
+        searchResults.style.display = 'block';
+      });
+
+      document.addEventListener('click', (e) => {
+        if (e.target !== searchInput && !searchResults.contains(e.target)) {
+          searchResults.style.display = 'none';
+        }
+      });
+    }
+
+    function initMobileToggle() {
+      const toggle = document.getElementById('sidebarToggle');
+      const sidebar = document.getElementById('sidebar');
+      toggle.addEventListener('click', () => {
+        sidebar.classList.toggle('hidden');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initNavigation();
+      initSearch();
+      initMobileToggle();
+      loadSection('summary');
+    });
+  </script>
+</body>
+</html>
