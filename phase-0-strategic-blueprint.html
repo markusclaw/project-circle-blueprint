@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Circle — Phase 0 Strategic Blueprint v3.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #fafafa;
+        }
+        header {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        header .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        header .classification {
+            font-size: 0.85rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        section {
+            background: #fff;
+            margin: 2.5rem 0;
+            padding: 2.5rem;
+            border-radius: 8px;
+            border-left: 5px solid #000;
+        }
+        section.thesis { border-left-color: #8b5cf6; }
+        section.principles { border-left-color: #ec4899; }
+        section.product { border-left-color: #22c55e; }
+        section.concierge { border-left-color: #f59e0b; }
+        section.validation { border-left-color: #3b82f6; }
+        section.personality { border-left-color: #06b6d4; }
+        section.privacy { border-left-color: #ef4444; }
+        section.safety { border-left-color: #d97706; }
+        section.tech { border-left-color: #8b5cf6; }
+        section.metrics { border-left-color: #10b981; }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: 600;
+        }
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #444;
+            font-weight: 600;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        li {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+        .highlight {
+            background: #f3f4f6;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #000;
+            font-style: italic;
+            color: #374151;
+        }
+        .callout {
+            background: #fef3c7;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #f59e0b;
+            color: #78350f;
+        }
+        code {
+            background: #f3f4f6;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-family: 'Menlo', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95em;
+        }
+        th {
+            background: #f3f4f6;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        tr:hover {
+            background: #fafafa;
+        }
+        .phase-box {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .interview-q {
+            background: #f0f9ff;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-radius: 4px;
+            border-left: 3px solid #3b82f6;
+        }
+        .workflow {
+            background: #f0fdf4;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-radius: 4px;
+            border-left: 3px solid #10b981;
+        }
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 4rem;
+        }
+        .toc {
+            background: #f9fafb;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .toc h3 {
+            margin-top: 0;
+        }
+        .toc ul {
+            list-style: none;
+            margin: 0;
+        }
+        .toc li {
+            margin: 0.5rem 0;
+        }
+        .toc a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        strong {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>⭕ Project Circle</h1>
+        <div class="subtitle">Phase 0 Strategic Blueprint v3.0</div>
+        <div class="subtitle">Trust-Centered Relationship Infrastructure</div>
+        <div class="classification">CONFIDENTIAL — Internal Strategic Use Only</div>
+    </header>
+
+    <div class="container">
+        <!-- TABLE OF CONTENTS -->
+        <div class="toc">
+            <h3>Navigation</h3>
+            <ul>
+                <li><a href="#executive">Executive Thesis</a></li>
+                <li><a href="#principles">Core Product Principles</a></li>
+                <li><a href="#insight">The Core Insight</a></li>
+                <li><a href="#personality">Five-Layer Personality System</a></li>
+                <li><a href="#concierge">Concierge MVP Model</a></li>
+                <li><a href="#validation">Phase 0 Validation Strategy</a></li>
+                <li><a href="#interviews">User Interview Framework</a></li>
+                <li><a href="#operations">Concierge Operations Playbook</a></li>
+                <li><a href="#privacy">Privacy Architecture</a></li>
+                <li><a href="#safety">Safety Architecture</a></li>
+                <li><a href="#realworld">Real-World Connection Layer</a></li>
+                <li><a href="#tech">Technical Philosophy & Stack</a></li>
+                <li><a href="#metrics">North Star Metrics</a></li>
+                <li><a href="#phase1">Phase 1 Validation Checklist</a></li>
+            </ul>
+        </div>
+
+        <!-- EXECUTIVE THESIS -->
+        <section class="thesis" id="executive">
+            <h2>Executive Thesis</h2>
+            <p><strong>Project Circle is not a traditional dating app.</strong></p>
+            <p>It is a trust-centered introduction platform built around self-knowledge, intentionality, and socially grounded human connection.</p>
+            
+            <h3>Core Thesis</h3>
+            <p>People are exhausted by algorithmic attention economies disguised as connection tools.</p>
+            <p><strong>Circle inverts that model.</strong></p>
+            
+            <h3>What Circle Does</h3>
+            <p>The platform helps users:</p>
+            <ul>
+                <li>Understand themselves deeply</li>
+                <li>Clarify values and relationship patterns</li>
+                <li>Build trusted social context</li>
+                <li>Receive curated introductions grounded in compatibility and social proximity</li>
+            </ul>
+
+            <h3>Design Philosophy</h3>
+            <p>The product should feel:</p>
+            <ul>
+                <li><strong>Calm</strong> — opposite of frantic swiping</li>
+                <li><strong>Intentional</strong> — every interaction meaningful</li>
+                <li><strong>Safe</strong> — identity trusted, behavior moderated</li>
+                <li><strong>Human</strong> — emotionally intelligent, warm</li>
+                <li><strong>Premium</strong> — sophisticated, not cluttered</li>
+            </ul>
+
+            <div class="highlight">
+                The AI is <strong>infrastructural, not theatrical.</strong> It should not feel like profiling. It should feel like being understood.
+            </div>
+        </section>
+
+        <!-- CORE PRINCIPLES -->
+        <section class="principles" id="principles">
+            <h2>Core Product Principles</h2>
+            <p>These principles are non-negotiable and guide every decision:</p>
+
+            <h3>1. Trust Over Engagement</h3>
+            <p>Circle optimizes for trust and real outcomes, not time-on-app.</p>
+            <ul>
+                <li>No infinite swiping</li>
+                <li>No slot-machine mechanics</li>
+                <li>No boosts, no engagement addiction loops</li>
+                <li>No psychological manipulation</li>
+            </ul>
+
+            <h3>2. Self-Knowledge First</h3>
+            <p>The primary output is self-understanding. Connection is a byproduct.</p>
+            <ul>
+                <li>Users gain value even without matches</li>
+                <li>Personality insights are a product unto themselves</li>
+                <li>Onboarding should feel reflective, not diagnostic</li>
+            </ul>
+
+            <h3>3. Human-Centered AI</h3>
+            <p>AI should be invisible and warm.</p>
+            <ul>
+                <li>Users feel: "I feel understood"</li>
+                <li>NOT: "I am being analyzed"</li>
+                <li>Conversational tone, not clinical</li>
+            </ul>
+
+            <h3>4. Real-World Connection Is The Goal</h3>
+            <p>Digital interaction is transitional. The app exists to create healthier real-world relationships.</p>
+
+            <h3>5. Safety Is Product Infrastructure</h3>
+            <p>Safety is not a backend feature. It is:</p>
+            <ul>
+                <li>Visual language</li>
+                <li>Interaction pacing</li>
+                <li>Identity verification</li>
+                <li>Moderation</li>
+                <li>Emotional atmosphere</li>
+            </ul>
+
+            <h3>6. Intentionality Over Scale</h3>
+            <p>Launch deep, not broad.</p>
+            <ul>
+                <li>Network density matters more than raw user count</li>
+                <li>Trust accumulates in small, high-context communities</li>
+                <li>Growth follows trust, not vice versa</li>
+            </ul>
+        </section>
+
+        <!-- THE CORE INSIGHT -->
+        <section class="insight" id="insight">
+            <h2>The Core Insight</h2>
+            <p><strong>Modern dating apps are engagement machines disguised as connection systems.</strong></p>
+            <p>Their incentives are structurally misaligned with users:</p>
+            <ul>
+                <li>More swiping = more revenue</li>
+                <li>More churn = more subscriptions</li>
+                <li>More emotional volatility = more engagement</li>
+            </ul>
+
+            <h3>Circle Aligns Incentives Differently</h3>
+            <p>Circle succeeds when:</p>
+            <ul>
+                <li>Introductions feel meaningful</li>
+                <li>Users trust the platform deeply</li>
+                <li>Users form real relationships</li>
+                <li>Users invite others and communities strengthen</li>
+                <li>Successful users reduce time-on-app (because they're living)</li>
+            </ul>
+
+            <h3>The Moat</h3>
+            <p>The competitive advantage is NOT primarily the LLM.</p>
+            <p>The long-term moat becomes:</p>
+            <ul>
+                <li>Trusted identity systems</li>
+                <li>Dense, trusting networks</li>
+                <li>Longitudinal behavioral learning</li>
+                <li>Compatibility feedback loops</li>
+                <li>Emotional trust as structural advantage</li>
+            </ul>
+        </section>
+
+        <!-- PERSONALITY SYSTEM -->
+        <section class="personality" id="personality">
+            <h2>Five-Layer Personality Architecture</h2>
+            <p><strong>This is the scientific and product foundation.</strong></p>
+
+            <h3>Layer 1: MBTI (UX & Communication)</h3>
+            <p><strong>Purpose:</strong> Familiarity, shareability, conversational framing</p>
+            <ul>
+                <li>People understand and love MBTI</li>
+                <li>It's culturally recognizable</li>
+                <li>NOT the scientific backbone</li>
+            </ul>
+
+            <h3>Layer 2: Big Five / OCEAN (Scientific Engine)</h3>
+            <p><strong>Purpose:</strong> Primary scientific foundation</p>
+            <ul>
+                <li><strong>Openness:</strong> curiosity, creativity, willingness to try new things</li>
+                <li><strong>Conscientiousness:</strong> organization, discipline, responsibility</li>
+                <li><strong>Extraversion:</strong> sociability, energy, dominance</li>
+                <li><strong>Agreeableness:</strong> compassion, cooperation, trust</li>
+                <li><strong>Neuroticism:</strong> anxiety, sensitivity, emotional stability</li>
+            </ul>
+            <p>Most stable, validated framework. Directly maps to relationship compatibility research.</p>
+
+            <h3>Layer 3: Attachment Theory (Relationship Health)</h3>
+            <p><strong>Purpose:</strong> Core relationship health predictor</p>
+            <ul>
+                <li><strong>Secure:</strong> confident, communicative, trusting</li>
+                <li><strong>Anxious:</strong> seeks reassurance, fears abandonment</li>
+                <li><strong>Avoidant:</strong> values independence, uncomfortable with intimacy</li>
+                <li><strong>Fearful-Avoidant:</strong> conflicted approach-avoidance</li>
+            </ul>
+            <p>Enormously predictive of relationship outcomes. More important than any single other variable.</p>
+
+            <h3>Layer 4: Communication & Relationship Style (Daily Life)</h3>
+            <p><strong>Purpose:</strong> Practical compatibility signals</p>
+            <ul>
+                <li>Love Languages (words, acts, time, touch, gifts)</li>
+                <li>Communication style (direct/indirect, emotional/rational)</li>
+                <li>Conflict style (avoidant/confrontational/collaborative)</li>
+                <li>Emotional pacing (fast/slow emotional escalation)</li>
+            </ul>
+
+            <h3>Layer 5: Dynamic Behavioral Learning (Long-Term Moat)</h3>
+            <p><strong>Purpose:</strong> Compounding advantage through time</p>
+            <ul>
+                <li>Longitudinal learning from conversations</li>
+                <li>AI builds vector embeddings of personality from interactions</li>
+                <li>Feedback loops from real-world meeting outcomes</li>
+                <li>Post-intro satisfaction signals refine matching</li>
+            </ul>
+            <p><strong>This becomes the real moat:</strong> Matching improves with every user interaction. Competitors starting from scratch can never catch up.</p>
+
+            <div class="highlight">
+                The compatibility formula is: <code>Compatibility = Type Resonance + Values Alignment + Lifestyle Fit + Growth Potential + Behavioral History</code>
+            </div>
+        </section>
+
+        <!-- CONCIERGE MVP -->
+        <section class="concierge" id="concierge">
+            <h2>The Concierge MVP Model</h2>
+            <p><strong>THIS IS THE MOST IMPORTANT STRATEGIC DECISION IN v3.</strong></p>
+            <p>The first 100–300 introductions are NOT algorithmically automated.</p>
+            <p>They are human-curated.</p>
+
+            <h3>Why Concierge First?</h3>
+            <p>This follows the proven startup principle: <strong>Do things that do not scale first.</strong></p>
+            <ul>
+                <li>Airbnb manually photographed listings before scaling</li>
+                <li>Uber manually dispatched rides initially</li>
+                <li>Circle manually curates introductions first</li>
+            </ul>
+            <p>The purpose is NOT efficiency. <strong>The purpose is learning.</strong></p>
+
+            <h3>What Concierge MVP Validates</h3>
+            <p>Before full automation, you must prove:</p>
+            <table>
+                <tr>
+                    <th>Validation Question</th>
+                    <th>Why It Matters</th>
+                </tr>
+                <tr>
+                    <td>Users complete self-knowledge onboarding</td>
+                    <td>Core funnel health</td>
+                </tr>
+                <tr>
+                    <td>Users trust enough to share deeply</td>
+                    <td>Foundation for everything</td>
+                </tr>
+                <tr>
+                    <td>Curated intros feel better than swiping</td>
+                    <td>Core value prop validation</td>
+                </tr>
+                <tr>
+                    <td>Social proximity increases trust</td>
+                    <td>Circles moat validation</td>
+                </tr>
+                <tr>
+                    <td>Users prefer intentional matching over infinite choice</td>
+                    <td>Anti-Tinder thesis validation</td>
+                </tr>
+                <tr>
+                    <td>Users return because they feel understood</td>
+                    <td>Retention mechanics</td>
+                </tr>
+                <tr>
+                    <td>Emotional pacing feels healthy</td>
+                    <td>Design philosophy proof</td>
+                </tr>
+                <tr>
+                    <td>Real-world meetings happen</td>
+                    <td>Product-market fit</td>
+                </tr>
+            </table>
+
+            <h3>Concierge Timeline & Scope</h3>
+            <p><strong>Phases:</strong></p>
+            <ul>
+                <li><strong>Phase 1a (Weeks 1-4):</strong> Launch with 50 initial users, 100% manual curation</li>
+                <li><strong>Phase 1b (Weeks 5-8):</strong> Grow to 100-150 users, maintain manual curation</li>
+                <li><strong>Phase 2 (Weeks 9-14):</strong> Build algorithmic matching, validate against manual curation quality</li>
+                <li><strong>Phase 3 (Weeks 15-20):</strong> Transition to 80/20 algorithmic/manual, keep human oversight</li>
+                <li><strong>Phase 4+:</strong> Full algorithmic, human escalations only</li>
+            </ul>
+
+            <div class="callout">
+                <strong>Key insight:</strong> You learn what "good matching" feels like by doing it manually first. Claude's algorithms then replicate and scale that intuition.
+            </div>
+        </section>
+
+        <!-- PHASE 0 VALIDATION -->
+        <section class="validation" id="validation">
+            <h2>Phase 0: Validation Before Architecture</h2>
+            <p><strong>Duration: Weeks 1-4</strong></p>
+            <p><strong>Philosophy: Research-heavy, not engineering-heavy.</strong></p>
+
+            <h3>The Goal</h3>
+            <p>Answer these thesis questions BEFORE building infrastructure:</p>
+            <ul>
+                <li>Will users complete self-knowledge onboarding?</li>
+                <li>Will users trust the platform with psychological data?</li>
+                <li>What intro mechanism feels best?</li>
+                <li>Which community should launch first?</li>
+                <li>What safety/identity verification is necessary?</li>
+                <li>What monetization model resonates?</li>
+            </ul>
+
+            <h3>Critical Phase 0 Decisions</h3>
+            <div class="phase-box">
+                <h4>Decision A: Cohort Selection</h4>
+                <p><strong>DO NOT launch broad.</strong> Launch inside one trusted, socially dense, high-context community.</p>
+                <p><strong>Examples:</strong></p>
+                <ul>
+                    <li>Boutique gym ecosystem (Crossfit Box, high-trust community)</li>
+                    <li>University subcommunity (engineering grads, specific cohort)</li>
+                    <li>Coworking network (founder community, inherent overlap)</li>
+                    <li>Professional cluster (therapists, coaches, consultants)</li>
+                    <li>Church/community group (shared values, existing trust)</li>
+                    <li>Startup founder network (high intent, tight-knit)</li>
+                </ul>
+                <p><strong>What matters:</strong> Existing trust > raw size. Density > geography.</p>
+            </div>
+
+            <div class="phase-box">
+                <h4>Decision B: Intro Mechanism</h4>
+                <p>How should people actually meet through Circle?</p>
+                <ul>
+                    <li><strong>Mutual opt-in messaging:</strong> Both users accept, then message opens</li>
+                    <li><strong>Guided warm intro:</strong> AI-generated intro narrative sent on behalf of curator</li>
+                    <li><strong>Event-based:</strong> Circle hosts gatherings, intros happen IRL</li>
+                    <li><strong>Mutual connection intro:</strong> Introduced by shared mutual friend</li>
+                </ul>
+                <p><strong>Your interviews determine which resonates.</strong></p>
+            </div>
+
+            <div class="phase-box">
+                <h4>Decision C: Connection Intent Taxonomy</h4>
+                <p>Circle should support multiple intent modes:</p>
+                <ul>
+                    <li><strong>Dating</strong> — romantic/partner seeking</li>
+                    <li><strong>Friendship</strong> — deep friendship</li>
+                    <li><strong>Community</strong> — belonging, shared values</li>
+                    <li><strong>Professional</strong> — business/collaboration</li>
+                    <li><strong>Self-Discovery Only</strong> — personality insights only</li>
+                </ul>
+                <p><strong>Why:</strong> Widens funnel, reduces dating-app stigma, increases engagement.</p>
+            </div>
+
+            <div class="phase-box">
+                <h4>Decision D: Safety/Identity Strategy</h4>
+                <p>What verification systems must be live at launch?</p>
+                <ul>
+                    <li><strong>Identity verification:</strong> Persona? Stripe Identity? Manual review?</li>
+                    <li><strong>Photo verification:</strong> Veriff? Manual moderation?</li>
+                    <li><strong>Social graph trust:</strong> Phone contacts? Mutual friends? Communities?</li>
+                </ul>
+                <p><strong>Principle:</strong> Safety is infrastructure, not Phase 5 polish.</p>
+            </div>
+        </section>
+
+        <!-- USER INTERVIEWS -->
+        <section class="validation" id="interviews">
+            <h2>User Interview Framework</h2>
+            <p><strong>Target: 30-50 deep interviews</strong></p>
+            <p><strong>Sample from:</strong> Users exhausted by dating apps, high-intent relationship seekers, self-improvement oriented</p>
+
+            <h3>Interview Script (30 Questions)</h3>
+
+            <h4>Section 1: Dating App Fatigue (7 questions)</h4>
+            <div class="interview-q">
+                <strong>Q1:</strong> What's your experience been with traditional dating apps (Tinder, Hinge, Bumble)?
+            </div>
+            <div class="interview-q">
+                <strong>Q2:</strong> What frustrates you most about those apps?
+            </div>
+            <div class="interview-q">
+                <strong>Q3:</strong> Have you ever quit a dating app? Why?
+            </div>
+            <div class="interview-q">
+                <strong>Q4:</strong> What would need to be different for you to try a new app?
+            </div>
+            <div class="interview-q">
+                <strong>Q5:</strong> How do you feel about swiping as a way to meet people?
+            </div>
+            <div class="interview-q">
+                <strong>Q6:</strong> Do you trust the people you match with on traditional apps? Why/why not?
+            </div>
+            <div class="interview-q">
+                <strong>Q7:</strong> How many conversations do you have on dating apps vs. how many real dates?
+            </div>
+
+            <h4>Section 2: Self-Knowledge & Personality (6 questions)</h4>
+            <div class="interview-q">
+                <strong>Q8:</strong> Are you interested in understanding yourself better — personality, values, patterns?
+            </div>
+            <div class="interview-q">
+                <strong>Q9:</strong> Have you done MBTI? Big Five? Attachment theory? How did you feel about it?
+            </div>
+            <div class="interview-q">
+                <strong>Q10:</strong> Would you be willing to complete a 15-minute personality/values assessment to help with introductions?
+            </div>
+            <div class="interview-q">
+                <strong>Q11:</strong> Would you want to see your personality insights, even if you don't match with anyone?
+            </div>
+            <div class="interview-q">
+                <strong>Q12:</strong> How comfortable are you with an AI interviewing you to understand you better?
+            </div>
+            <div class="interview-q">
+                <strong>Q13:</strong> What would make you feel like an app "gets you"?
+            </div>
+
+            <h4>Section 3: Social Graph & Trust (5 questions)</h4>
+            <div class="interview-q">
+                <strong>Q14:</strong> Would you feel more comfortable being introduced to someone within your existing social circle vs. a stranger?
+            </div>
+            <div class="interview-q">
+                <strong>Q15:</strong> How comfortable are you with the app knowing your social connections?
+            </div>
+            <div class="interview-q">
+                <strong>Q16:</strong> Would you want to know the mutual connection between you and a potential match?
+            </div>
+            <div class="interview-q">
+                <strong>Q17:</strong> What makes you trust someone to introduce you to another person?
+            </div>
+            <div class="interview-q">
+                <strong>Q18:</strong> Would you rather be introduced by a friend, by a curator/person, or by an algorithm?
+            </div>
+
+            <h4>Section 4: Introduction Mechanism (5 questions)</h4>
+            <div class="interview-q">
+                <strong>Q19:</strong> How do you prefer to be introduced to new people? (via message, in person, warm intro from mutual friend, etc.)
+            </div>
+            <div class="interview-q">
+                <strong>Q20:</strong> Would you like the app to suggest what to say when reaching out to a match?
+            </div>
+            <div class="interview-q">
+                <strong>Q21:</strong> Would event-based introductions (Circle hosts dinners/gatherings) appeal to you?
+            </div>
+            <div class="interview-q">
+                <strong>Q22:</strong> How much information do you want to know about someone before being introduced?
+            </div>
+            <div class="interview-q">
+                <strong>Q23:</strong> Would you want a summary of why the app thinks you'd connect?
+            </div>
+
+            <h4>Section 5: Safety & Identity (4 questions)</h4>
+            <div class="interview-q">
+                <strong>Q24:</strong> What makes you feel safe on a dating/intro app?
+            </div>
+            <div class="interview-q">
+                <strong>Q25:</strong> Would you be comfortable verifying your identity (ID verification, photo check)?
+            </div>
+            <div class="interview-q">
+                <strong>Q26:</strong> What would you need to see to trust someone you matched with?
+            </div>
+            <div class="interview-q">
+                <strong>Q27:</strong> Have you had bad experiences on dating apps? (harassment, catfishing, etc.)
+            </div>
+
+            <h4>Section 6: Monetization & Commitment (3 questions)</h4>
+            <div class="interview-q">
+                <strong>Q28:</strong> Would you pay for an app that actually works for matching, vs. a free app with ads/boosts?
+            </div>
+            <div class="interview-q">
+                <strong>Q29:</strong> What price point feels fair? ($5/mo, $10/mo, $20/mo, $100/year?)
+            </div>
+            <div class="interview-q">
+                <strong>Q30:</strong> What would make you feel the app is worth paying for?
+            </div>
+
+            <h3>Interview Output Synthesis</h3>
+            <p>After interviews, synthesize:</p>
+            <ul>
+                <li>
