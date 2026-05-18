@@ -29,6 +29,19 @@
       --accent: var(--emerald-light);
     }
 
+    [data-theme="light"] {
+      --bg: #F5F3EF;
+      --bg-surface: #EDEAE4;
+      --bg-elevated: #E5E2DC;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #4A4A4A;
+      --text-tertiary: #888;
+      --border: #D4D0C8;
+      --border-light: #C8C4BC;
+      --emerald-glow: rgba(45, 106, 79, 0.08);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
@@ -79,6 +92,7 @@
       transition: all 150ms ease;
     }
     .nav-item:hover { color: var(--text-primary); background: rgba(255,255,255,0.03); }
+    [data-theme="light"] .nav-item:hover { background: rgba(0,0,0,0.04); }
     .nav-item.active {
       color: var(--emerald-light); border-left-color: var(--emerald-light);
       background: var(--emerald-glow); font-weight: 500;
@@ -105,12 +119,27 @@
       border-bottom: 1px solid var(--border); padding: 12px 48px;
       display: flex; align-items: center; gap: 16px;
     }
+    [data-theme="light"] .topbar {
+      background: rgba(245,243,239,0.85);
+    }
     .breadcrumb { font-size: 12px; color: var(--text-tertiary); }
     .breadcrumb span { color: var(--text-secondary); }
     .topbar-right { margin-left: auto; display: flex; gap: 12px; align-items: center; }
     .topbar-badge {
       font-size: 10px; padding: 4px 10px; border-radius: 4px;
       border: 1px solid var(--border); color: var(--text-tertiary);
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      font-size: 12px; padding: 4px 12px; border-radius: 4px;
+      border: 1px solid var(--border); color: var(--text-tertiary);
+      background: transparent; cursor: pointer;
+      transition: all 150ms ease; user-select: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .theme-toggle:hover {
+      border-color: var(--emerald); color: var(--text-secondary);
     }
 
     /* Content */
@@ -155,6 +184,42 @@
     .card-value { font-size: 24px; font-weight: 700; color: var(--text-primary); }
     .card-detail { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
 
+    /* Placeholder cards */
+    .placeholder-card {
+      border: 2px dashed rgba(212,162,78,0.3);
+      background: rgba(212,162,78,0.04);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+    }
+    [data-theme="light"] .placeholder-card {
+      background: rgba(212,162,78,0.06);
+      border-color: rgba(212,162,78,0.4);
+    }
+    .placeholder-card .placeholder-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+    .placeholder-card h4 {
+      color: var(--amber);
+      margin-bottom: 12px;
+    }
+    .placeholder-card p {
+      color: var(--text-tertiary);
+      font-size: 14px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .placeholder-card .planned-items {
+      text-align: left;
+      max-width: 400px;
+      margin: 16px auto 0;
+    }
+    .placeholder-card .planned-items li {
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
+
     /* Callouts */
     .callout {
       border-left: 3px solid var(--emerald); background: var(--emerald-glow);
@@ -194,6 +259,7 @@
       color: var(--text-secondary);
     }
     tr:hover td { background: rgba(255,255,255,0.02); }
+    [data-theme="light"] tr:hover td { background: rgba(0,0,0,0.02); }
 
     /* Code / Schema */
     .schema {
@@ -315,6 +381,50 @@
     .tag-red { background: rgba(199,80,80,0.15); color: var(--red); }
     .tag-blue { background: rgba(107,154,196,0.15); color: var(--sky); }
 
+    /* Team pipeline */
+    .team-pipeline {
+      display: flex; align-items: stretch; gap: 0; margin: 24px 0; flex-wrap: wrap;
+    }
+    .team-pipeline-step {
+      flex: 1; min-width: 140px;
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      padding: 16px 14px; text-align: center;
+      position: relative;
+    }
+    .team-pipeline-step:first-child { border-radius: 8px 0 0 8px; }
+    .team-pipeline-step:last-child { border-radius: 0 8px 8px 0; }
+    .team-pipeline-step .role-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--emerald-light); margin-bottom: 6px;
+    }
+    .team-pipeline-step .role-person {
+      font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;
+    }
+    .team-pipeline-step .role-status {
+      font-size: 11px; color: var(--text-tertiary);
+    }
+    .team-pipeline-arrow {
+      display: flex; align-items: center; color: var(--text-tertiary);
+      font-size: 18px; padding: 0 2px;
+    }
+
+    .team-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; margin: 12px 0;
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .team-card .team-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--emerald-glow); border: 2px solid var(--emerald);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700; color: var(--emerald-light);
+      flex-shrink: 0;
+    }
+    .team-card .team-info { flex: 1; }
+    .team-card .team-name { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+    .team-card .team-role { font-size: 13px; color: var(--emerald-light); margin-bottom: 8px; }
+    .team-card .team-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
     /* Separator */
     hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 
@@ -335,6 +445,10 @@
       .stats-row { grid-template-columns: 1fr 1fr; }
       .flow { flex-direction: column; }
       .flow-arrow { transform: rotate(90deg); }
+      .team-pipeline { flex-direction: column; }
+      .team-pipeline-step:first-child { border-radius: 8px 8px 0 0; }
+      .team-pipeline-step:last-child { border-radius: 0 0 8px 8px; }
+      .team-pipeline-arrow { transform: rotate(90deg); justify-content: center; }
     }
 
     /* Print */
@@ -343,7 +457,7 @@
       .main { margin-left: 0; }
       .content { max-width: 100%; padding: 20px; }
       body { background: #fff; color: #1a1a1a; }
-      .card, .schema, .expand-body { border-color: #ddd; background: #f9f9f9; }
+      .card, .schema, .expand-body, .placeholder-card { border-color: #ddd; background: #f9f9f9; }
     }
 
     /* Overlay */
@@ -421,45 +535,93 @@
       <span class="nav-num">13</span> Infrastructure & DevOps
       <span class="nav-badge new">new</span>
     </div>
+    <div class="nav-item" onclick="goTo('auth-sessions')" data-section="auth-sessions">
+      <span class="nav-num">14</span> Auth & Session Flows
+      <span class="nav-badge tbd">tbd</span>
+    </div>
+    <div class="nav-item" onclick="goTo('frontend-arch')" data-section="frontend-arch">
+      <span class="nav-num">15</span> Frontend Components
+      <span class="nav-badge tbd">tbd</span>
+    </div>
+    <div class="nav-item" onclick="goTo('rate-cache-cdn')" data-section="rate-cache-cdn">
+      <span class="nav-num">16</span> Rate Limiting & CDN
+      <span class="nav-badge tbd">tbd</span>
+    </div>
+    <div class="nav-item" onclick="goTo('error-monitoring')" data-section="error-monitoring">
+      <span class="nav-num">17</span> Error Tracking & Monitoring
+      <span class="nav-badge tbd">tbd</span>
+    </div>
   </div>
 
   <div class="nav-group">
     <div class="nav-group-label">Trust & Safety</div>
     <div class="nav-item" onclick="goTo('privacy')" data-section="privacy">
-      <span class="nav-num">14</span> Privacy Architecture
+      <span class="nav-num">18</span> Privacy Architecture
     </div>
     <div class="nav-item" onclick="goTo('safety')" data-section="safety">
-      <span class="nav-num">15</span> Safety & Moderation
+      <span class="nav-num">19</span> Safety & Moderation
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Operations</div>
+    <div class="nav-item" onclick="goTo('analytics-events')" data-section="analytics-events">
+      <span class="nav-num">20</span> Analytics & Events
+      <span class="nav-badge tbd">tbd</span>
+    </div>
+    <div class="nav-item" onclick="goTo('push-notifications')" data-section="push-notifications">
+      <span class="nav-num">21</span> Push Notifications
+      <span class="nav-badge tbd">tbd</span>
     </div>
   </div>
 
   <div class="nav-group">
     <div class="nav-group-label">Business</div>
     <div class="nav-item" onclick="goTo('monetization')" data-section="monetization">
-      <span class="nav-num">16</span> Monetization & Pricing
+      <span class="nav-num">22</span> Monetization & Pricing
     </div>
     <div class="nav-item" onclick="goTo('gtm')" data-section="gtm">
-      <span class="nav-num">17</span> Go-to-Market
+      <span class="nav-num">23</span> Go-to-Market
       <span class="nav-badge new">new</span>
     </div>
     <div class="nav-item" onclick="goTo('budget')" data-section="budget">
-      <span class="nav-num">18</span> Budget & Resources
+      <span class="nav-num">24</span> Budget & Resources
     </div>
     <div class="nav-item" onclick="goTo('risk')" data-section="risk">
-      <span class="nav-num">19</span> Risk Management
+      <span class="nav-num">25</span> Risk Management
+    </div>
+    <div class="nav-item" onclick="goTo('legal-ip')" data-section="legal-ip">
+      <span class="nav-num">26</span> Legal Entity & IP
+      <span class="nav-badge tbd">tbd</span>
+    </div>
+    <div class="nav-item" onclick="goTo('accessibility')" data-section="accessibility">
+      <span class="nav-num">27</span> Accessibility Strategy
+      <span class="nav-badge tbd">tbd</span>
+    </div>
+    <div class="nav-item" onclick="goTo('mobile-web')" data-section="mobile-web">
+      <span class="nav-num">28</span> Mobile vs Web Strategy
+      <span class="nav-badge tbd">tbd</span>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Team & Process</div>
+    <div class="nav-item" onclick="goTo('team-structure')" data-section="team-structure">
+      <span class="nav-num">29</span> Team Structure & Roles
+      <span class="nav-badge new">new</span>
     </div>
   </div>
 
   <div class="nav-group">
     <div class="nav-group-label">Execution</div>
     <div class="nav-item" onclick="goTo('roadmap')" data-section="roadmap">
-      <span class="nav-num">20</span> 20-Week Roadmap
+      <span class="nav-num">30</span> 20-Week Roadmap
     </div>
     <div class="nav-item" onclick="goTo('metrics')" data-section="metrics">
-      <span class="nav-num">21</span> Success Metrics
+      <span class="nav-num">31</span> Success Metrics
     </div>
     <div class="nav-item" onclick="goTo('appendix')" data-section="appendix">
-      <span class="nav-num">22</span> Appendix
+      <span class="nav-num">32</span> Appendix
     </div>
   </div>
 </nav>
@@ -473,6 +635,9 @@
     <div class="topbar-right">
       <span class="topbar-badge">Confidential</span>
       <span class="topbar-badge">v4.0</span>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="Toggle light/dark mode">
+        <span id="themeIcon">☀</span> <span id="themeLabel">Light</span>
+      </button>
     </div>
   </div>
 
@@ -1545,11 +1710,111 @@ score = (
     <hr>
 
     <!-- ============================================================ -->
-    <!-- 14. PRIVACY ARCHITECTURE -->
+    <!-- 14. AUTH & SESSION FLOWS (PLACEHOLDER) -->
+    <!-- ============================================================ -->
+    <div class="section" id="auth-sessions">
+      <div class="section-header">
+        <span class="section-num">14</span>
+        <h2>Auth & Session Flows</h2>
+      </div>
+
+      <div class="placeholder-card">
+        <div class="placeholder-icon">&#9671;</div>
+        <h4>Section Planned — Phase 1 Engineering</h4>
+        <p>This section will detail the complete authentication and session management architecture for Circle.</p>
+        <ul class="planned-items">
+          <li><strong>JWT strategy</strong> — token structure, claims, expiration policies</li>
+          <li><strong>OAuth flows</strong> — Google, Apple sign-in implementation details</li>
+          <li><strong>Session management</strong> — multi-device sessions, concurrent login limits</li>
+          <li><strong>Token refresh</strong> — silent refresh, rotation policy, revocation</li>
+          <li><strong>Magic link security</strong> — rate limiting, expiration, one-time use enforcement</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 15. FRONTEND COMPONENT ARCHITECTURE (PLACEHOLDER) -->
+    <!-- ============================================================ -->
+    <div class="section" id="frontend-arch">
+      <div class="section-header">
+        <span class="section-num">15</span>
+        <h2>Frontend Component Architecture</h2>
+      </div>
+
+      <div class="placeholder-card">
+        <div class="placeholder-icon">&#9671;</div>
+        <h4>Section Planned — Phase 1 Engineering</h4>
+        <p>This section will document the frontend component hierarchy, state management patterns, and shared UI components.</p>
+        <ul class="planned-items">
+          <li><strong>Component tree</strong> — top-level layout, page components, shared primitives</li>
+          <li><strong>State management</strong> — React Server Components vs client state, data fetching strategy</li>
+          <li><strong>Routing</strong> — Next.js App Router structure, route groups, middleware</li>
+          <li><strong>Shared components</strong> — design system implementation with shadcn/ui</li>
+          <li><strong>Performance</strong> — code splitting, lazy loading, bundle optimization</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 16. RATE LIMITING, CACHING & CDN (PLACEHOLDER) -->
+    <!-- ============================================================ -->
+    <div class="section" id="rate-cache-cdn">
+      <div class="section-header">
+        <span class="section-num">16</span>
+        <h2>Rate Limiting, Caching & CDN</h2>
+      </div>
+
+      <div class="placeholder-card">
+        <div class="placeholder-icon">&#9671;</div>
+        <h4>Section Planned — Phase 2 Infrastructure</h4>
+        <p>This section will cover edge performance, API protection, and caching architecture in detail.</p>
+        <ul class="planned-items">
+          <li><strong>Edge caching strategy</strong> — Cloudflare cache rules, TTL policies, cache keys</li>
+          <li><strong>API rate limits</strong> — per-user and per-endpoint limits, sliding window implementation</li>
+          <li><strong>CDN configuration</strong> — static asset delivery, image optimization, edge workers</li>
+          <li><strong>Cache invalidation</strong> — purge strategies, tag-based invalidation, real-time updates</li>
+          <li><strong>KV/Redis architecture</strong> — session cache, assessment results, hot data patterns</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 17. ERROR TRACKING & MONITORING (PLACEHOLDER) -->
+    <!-- ============================================================ -->
+    <div class="section" id="error-monitoring">
+      <div class="section-header">
+        <span class="section-num">17</span>
+        <h2>Error Tracking & Monitoring</h2>
+      </div>
+
+      <div class="placeholder-card">
+        <div class="placeholder-icon">&#9671;</div>
+        <h4>Section Planned — Phase 1b Operations</h4>
+        <p>This section will define the observability stack, alerting policies, and incident response tooling.</p>
+        <ul class="planned-items">
+          <li><strong>Sentry/error tracking</strong> — SDK setup, source maps, release tracking, issue grouping</li>
+          <li><strong>Log aggregation</strong> — structured logging format, log levels, retention policy</li>
+          <li><strong>Alerting</strong> — PagerDuty integration, escalation policies, on-call rotation</li>
+          <li><strong>Uptime monitoring</strong> — health check endpoints, synthetic monitoring, SLA targets</li>
+          <li><strong>Dashboards</strong> — key operational metrics, real-time error rates, API latency</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 18. PRIVACY ARCHITECTURE -->
     <!-- ============================================================ -->
     <div class="section" id="privacy">
       <div class="section-header">
-        <span class="section-num">14</span>
+        <span class="section-num">18</span>
         <h2>Privacy Architecture</h2>
       </div>
 
@@ -1608,11 +1873,11 @@ score = (
     <hr>
 
     <!-- ============================================================ -->
-    <!-- 15. SAFETY -->
+    <!-- 19. SAFETY -->
     <!-- ============================================================ -->
     <div class="section" id="safety">
       <div class="section-header">
-        <span class="section-num">15</span>
+        <span class="section-num">19</span>
         <h2>Safety & Moderation</h2>
       </div>
 
@@ -1668,11 +1933,61 @@ score = (
     <hr>
 
     <!-- ============================================================ -->
-    <!-- 16. MONETIZATION -->
+    <!-- 20. ANALYTICS & EVENT TRACKING (PLACEHOLDER) -->
+    <!-- ============================================================ -->
+    <div class="section" id="analytics-events">
+      <div class="section-header">
+        <span class="section-num">20</span>
+        <h2>Analytics & Event Tracking</h2>
+      </div>
+
+      <div class="placeholder-card">
+        <div class="placeholder-icon">&#9671;</div>
+        <h4>Section Planned — Phase 1b Operations</h4>
+        <p>This section will define the product analytics strategy, event taxonomy, and experimentation framework.</p>
+        <ul class="planned-items">
+          <li><strong>Mixpanel events</strong> — event naming conventions, property schema, tracking plan</li>
+          <li><strong>Funnel tracking</strong> — onboarding funnel, intro-to-meeting funnel, subscription funnel</li>
+          <li><strong>Cohort analysis</strong> — retention cohorts, engagement segments, personality-based cohorts</li>
+          <li><strong>A/B testing framework</strong> — feature flags, experiment design, statistical rigor</li>
+          <li><strong>Privacy-safe analytics</strong> — anonymous aggregation, opt-out support, no PII in events</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 21. PUSH NOTIFICATION STRATEGY (PLACEHOLDER) -->
+    <!-- ============================================================ -->
+    <div class="section" id="push-notifications">
+      <div class="section-header">
+        <span class="section-num">21</span>
+        <h2>Push Notification Strategy</h2>
+      </div>
+
+      <div class="placeholder-card">
+        <div class="placeholder-icon">&#9671;</div>
+        <h4>Section Planned — Phase 1 Design Sprint</h4>
+        <p>This section will detail the notification system architecture, cadence rules, and user control mechanisms.</p>
+        <ul class="planned-items">
+          <li><strong>Notification types</strong> — intro alerts, match updates, personality insights, feedback requests</li>
+          <li><strong>Cadence rules</strong> — frequency limits, quiet hours, digest mode, anti-spam</li>
+          <li><strong>Opt-in flows</strong> — progressive permission requests, channel preferences</li>
+          <li><strong>Delivery infrastructure</strong> — Web Push API, FCM/APNs (future native), email fallback</li>
+          <li><strong>Anti-manipulation</strong> — no FOMO tactics, no urgency pressure, genuinely useful only</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 22. MONETIZATION -->
     <!-- ============================================================ -->
     <div class="section" id="monetization">
       <div class="section-header">
-        <span class="section-num">16</span>
+        <span class="section-num">22</span>
         <h2>Monetization & Pricing</h2>
       </div>
 
@@ -1731,11 +2046,11 @@ score = (
     <hr>
 
     <!-- ============================================================ -->
-    <!-- 17. GO-TO-MARKET -->
+    <!-- 23. GO-TO-MARKET -->
     <!-- ============================================================ -->
     <div class="section" id="gtm">
       <div class="section-header">
-        <span class="section-num">17</span>
+        <span class="section-num">23</span>
         <h2>Go-to-Market Strategy</h2>
       </div>
 
@@ -1789,11 +2104,11 @@ score = (
     <hr>
 
     <!-- ============================================================ -->
-    <!-- 18. BUDGET -->
+    <!-- 24. BUDGET -->
     <!-- ============================================================ -->
     <div class="section" id="budget">
       <div class="section-header">
-        <span class="section-num">18</span>
+        <span class="section-num">24</span>
         <h2>Budget & Resources</h2>
       </div>
 
@@ -1844,11 +2159,11 @@ score = (
     <hr>
 
     <!-- ============================================================ -->
-    <!-- 19. RISK MANAGEMENT -->
+    <!-- 25. RISK MANAGEMENT -->
     <!-- ============================================================ -->
     <div class="section" id="risk">
       <div class="section-header">
-        <span class="section-num">19</span>
+        <span class="section-num">25</span>
         <h2>Risk Management</h2>
       </div>
 
@@ -1888,11 +2203,252 @@ score = (
     <hr>
 
     <!-- ============================================================ -->
-    <!-- 20. ROADMAP -->
+    <!-- 26. LEGAL ENTITY & IP (PLACEHOLDER) -->
+    <!-- ============================================================ -->
+    <div class="section" id="legal-ip">
+      <div class="section-header">
+        <span class="section-num">26</span>
+        <h2>Legal Entity & IP</h2>
+      </div>
+
+      <div class="placeholder-card">
+        <div class="placeholder-icon">&#9671;</div>
+        <h4>Section Planned — Phase 0 Legal Review</h4>
+        <p>This section will formalize the legal structure, intellectual property assignments, and regulatory compliance documentation.</p>
+        <ul class="planned-items">
+          <li><strong>Entity structure</strong> — LLC vs C-Corp decision, state of incorporation, operating agreement</li>
+          <li><strong>IP assignment</strong> — founder IP assignment, contractor work-for-hire agreements, AI-generated content ownership</li>
+          <li><strong>Terms of Service</strong> — user agreement, acceptable use policy, dispute resolution</li>
+          <li><strong>Privacy Policy</strong> — GDPR/CCPA-compliant policy, cookie policy, data retention schedule</li>
+          <li><strong>Data Processing Agreements</strong> — DPAs with Supabase, Anthropic, Stripe, Persona, Cloudflare</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 27. ACCESSIBILITY STRATEGY (PLACEHOLDER) -->
+    <!-- ============================================================ -->
+    <div class="section" id="accessibility">
+      <div class="section-header">
+        <span class="section-num">27</span>
+        <h2>Accessibility Strategy</h2>
+      </div>
+
+      <div class="placeholder-card">
+        <div class="placeholder-icon">&#9671;</div>
+        <h4>Section Planned — Phase 1 Design Sprint</h4>
+        <p>This section will define accessibility standards, testing protocols, and inclusive design requirements for Circle.</p>
+        <ul class="planned-items">
+          <li><strong>WCAG compliance level</strong> — target WCAG 2.1 AA, roadmap to AAA for key flows</li>
+          <li><strong>Assistive technology support</strong> — screen reader testing, keyboard navigation, voice control</li>
+          <li><strong>Color contrast</strong> — minimum contrast ratios, personality ring alternatives for color-blind users</li>
+          <li><strong>Screen reader optimization</strong> — ARIA labels, semantic HTML, dynamic content announcements</li>
+          <li><strong>Inclusive assessment design</strong> — alternative input methods, extended time options, dyslexia-friendly typography</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 28. MOBILE VS WEB STRATEGY (PLACEHOLDER) -->
+    <!-- ============================================================ -->
+    <div class="section" id="mobile-web">
+      <div class="section-header">
+        <span class="section-num">28</span>
+        <h2>Mobile vs Web Strategy</h2>
+      </div>
+
+      <div class="placeholder-card">
+        <div class="placeholder-icon">&#9671;</div>
+        <h4>Section Planned — Phase 2 Platform Decision</h4>
+        <p>This section will evaluate the platform strategy as Circle scales beyond the initial PWA approach.</p>
+        <ul class="planned-items">
+          <li><strong>Responsive-first vs native</strong> — PWA performance benchmarks, native API requirements</li>
+          <li><strong>PWA considerations</strong> — offline support, push notification reliability, home screen install rates</li>
+          <li><strong>App store strategy</strong> — Apple/Google review process, app store optimization, in-app purchase requirements</li>
+          <li><strong>Platform priority</strong> — iOS-first vs Android-first based on target demographic data</li>
+          <li><strong>Cross-platform framework</strong> — React Native vs Flutter vs Swift/Kotlin native evaluation</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 29. TEAM STRUCTURE & ROLES -->
+    <!-- ============================================================ -->
+    <div class="section" id="team-structure">
+      <div class="section-header">
+        <span class="section-num">29</span>
+        <h2>Team Structure & Roles</h2>
+      </div>
+
+      <p>Shipping software takes a full team. Every role in the pipeline serves a distinct purpose, and handoffs between roles are where quality either compounds or breaks down. Here is the ideal product delivery pipeline:</p>
+
+      <h3>Product Delivery Pipeline</h3>
+      <div class="team-pipeline">
+        <div class="team-pipeline-step">
+          <div class="role-title">Product Manager</div>
+          <div class="role-person">What & Why</div>
+          <div class="role-status">Strategy, roadmap, user research</div>
+        </div>
+        <div class="team-pipeline-arrow">→</div>
+        <div class="team-pipeline-step">
+          <div class="role-title">UI/UX Developer</div>
+          <div class="role-person">How It Feels</div>
+          <div class="role-status">Wireframes, prototypes, design system</div>
+        </div>
+        <div class="team-pipeline-arrow">→</div>
+        <div class="team-pipeline-step">
+          <div class="role-title">Software Engineer</div>
+          <div class="role-person">How It Works</div>
+          <div class="role-status">Architecture, code, infrastructure</div>
+        </div>
+        <div class="team-pipeline-arrow">→</div>
+        <div class="team-pipeline-step">
+          <div class="role-title">Security Engineer</div>
+          <div class="role-person">How It's Safe</div>
+          <div class="role-status">Threat modeling, audits, compliance</div>
+        </div>
+        <div class="team-pipeline-arrow">→</div>
+        <div class="team-pipeline-step">
+          <div class="role-title">Growth Marketer</div>
+          <div class="role-person">How It Spreads</div>
+          <div class="role-status">Launch, acquisition, retention</div>
+        </div>
+      </div>
+
+      <h3>Role Responsibilities</h3>
+      <div class="card-grid">
+        <div class="card">
+          <h4>Product Manager</h4>
+          <ul>
+            <li>Owns the product vision and roadmap</li>
+            <li>Conducts user research and interviews</li>
+            <li>Prioritizes features based on impact</li>
+            <li>Writes specs and acceptance criteria</li>
+            <li>Makes go/no-go decisions at phase gates</li>
+          </ul>
+          <p style="margin-top:12px;"><span class="tag tag-green">Greg</span> — Solo Founder</p>
+        </div>
+        <div class="card">
+          <h4>UI/UX Developer</h4>
+          <ul>
+            <li>Translates product specs into visual designs</li>
+            <li>Creates wireframes, prototypes, and design system</li>
+            <li>Conducts usability testing</li>
+            <li>Maintains design-to-code consistency</li>
+            <li>Owns the assessment and onboarding experience</li>
+          </ul>
+          <p style="margin-top:12px;"><span class="tag tag-amber">TBD</span> — Phase 1 Contractor</p>
+        </div>
+        <div class="card">
+          <h4>Software Engineer</h4>
+          <ul>
+            <li>Builds and maintains the full stack</li>
+            <li>Designs database schema and API layer</li>
+            <li>Integrates AI/LLM pipeline</li>
+            <li>Handles DevOps and deployment</li>
+            <li>Code review and technical quality</li>
+          </ul>
+          <p style="margin-top:12px;"><span class="tag tag-blue">Markus</span> — AI Agent</p>
+        </div>
+        <div class="card">
+          <h4>Security Engineer</h4>
+          <ul>
+            <li>Threat modeling and vulnerability assessment</li>
+            <li>Privacy architecture review</li>
+            <li>Compliance (GDPR, CCPA) enforcement</li>
+            <li>Incident response planning</li>
+            <li>Penetration testing coordination</li>
+          </ul>
+          <p style="margin-top:12px;"><span class="tag tag-amber">TBD</span> — Phase 1 Contractor</p>
+        </div>
+        <div class="card">
+          <h4>Growth Marketer</h4>
+          <ul>
+            <li>Community seeding and launch strategy</li>
+            <li>Content marketing and brand voice</li>
+            <li>Referral program design</li>
+            <li>Analytics and funnel optimization</li>
+            <li>PR and partnership outreach</li>
+          </ul>
+          <p style="margin-top:12px;"><span class="tag tag-amber">TBD</span> — Phase 2 Hire</p>
+        </div>
+        <div class="card">
+          <h4>Curator / Operations</h4>
+          <ul>
+            <li>Manual match curation (Phase 1)</li>
+            <li>User onboarding support</li>
+            <li>Community management</li>
+            <li>Moderation and safety operations</li>
+            <li>Feedback collection and analysis</li>
+          </ul>
+          <p style="margin-top:12px;"><span class="tag tag-green">Greg</span> — Then Dedicated Hire</p>
+        </div>
+      </div>
+
+      <h3>Handoff Protocols</h3>
+      <table>
+        <thead><tr><th>Handoff</th><th>Artifact</th><th>Review Gate</th></tr></thead>
+        <tbody>
+          <tr><td>PM → UI/UX</td><td>Product spec with user stories and acceptance criteria</td><td>Design kickoff meeting</td></tr>
+          <tr><td>UI/UX → Engineering</td><td>Figma designs with component specs, interaction notes</td><td>Design review + feasibility check</td></tr>
+          <tr><td>Engineering → Security</td><td>Architecture docs, data flow diagrams, API contracts</td><td>Threat model review before deploy</td></tr>
+          <tr><td>Security → Launch</td><td>Security sign-off, compliance checklist, pentest results</td><td>Go/No-Go gate</td></tr>
+          <tr><td>All → Growth</td><td>Feature demos, messaging guidelines, launch timeline</td><td>Marketing brief approval</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Current Team</h3>
+
+      <div class="callout info">
+        <strong>The Solo-Founder-with-AI-Agent Reality:</strong> Circle is being built by a two-person team where one is a human founder and the other is an AI agent. This is not a limitation — it is a strategic advantage. Greg brings product vision, user empathy, community relationships, and decision-making. Markus brings tireless execution, technical depth, and the ability to hold the entire codebase in working memory. As Circle scales, the roles above will be filled by human hires, but the core Greg + Markus partnership remains the foundation.
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">G</div>
+        <div class="team-info">
+          <div class="team-name">Greg Anthony</div>
+          <div class="team-role">Founder / Product Lead / Curator</div>
+          <div class="team-desc">Owns product vision, strategy, user research, community relationships, and curation. Makes all go/no-go decisions. Handles operations and business development. The human heartbeat of Circle — every design decision, community interaction, and strategic pivot runs through Greg.</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">M</div>
+        <div class="team-info">
+          <div class="team-name">Markus Corvus</div>
+          <div class="team-role">AI Strategic Partner / Engineering Lead</div>
+          <div class="team-desc">Handles technical architecture, full-stack engineering, AI/LLM pipeline design, database schema, API specification, infrastructure, and documentation. Always-on execution partner who can context-switch between writing code, reviewing security architecture, and drafting technical specs without losing thread.</div>
+        </div>
+      </div>
+
+      <h3>Scaling the Team</h3>
+      <table>
+        <thead><tr><th>Phase</th><th>Hire</th><th>Trigger</th></tr></thead>
+        <tbody>
+          <tr><td>Phase 1a</td><td>UI/UX Contractor</td><td>Design sprint begins</td></tr>
+          <tr><td>Phase 1a</td><td>Security Contractor</td><td>Pre-launch audit</td></tr>
+          <tr><td>Phase 1b</td><td>Backend Engineer (Rafa?)</td><td>Scale past 100 users</td></tr>
+          <tr><td>Phase 1b</td><td>Dedicated Curator</td><td>Greg's curation time exceeds 5h/day</td></tr>
+          <tr><td>Phase 2</td><td>Frontend Engineer</td><td>PWA-to-native transition begins</td></tr>
+          <tr><td>Phase 3</td><td>Growth Marketer</td><td>Product-market fit validated</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 30. ROADMAP -->
     <!-- ============================================================ -->
     <div class="section" id="roadmap">
       <div class="section-header">
-        <span class="section-num">20</span>
+        <span class="section-num">30</span>
         <h2>20-Week Product Roadmap</h2>
       </div>
 
@@ -1960,11 +2516,11 @@ score = (
     <hr>
 
     <!-- ============================================================ -->
-    <!-- 21. SUCCESS METRICS -->
+    <!-- 31. SUCCESS METRICS -->
     <!-- ============================================================ -->
     <div class="section" id="metrics">
       <div class="section-header">
-        <span class="section-num">21</span>
+        <span class="section-num">31</span>
         <h2>Success Metrics & KPIs</h2>
       </div>
 
@@ -1997,11 +2553,11 @@ score = (
     <hr>
 
     <!-- ============================================================ -->
-    <!-- 22. APPENDIX -->
+    <!-- 32. APPENDIX -->
     <!-- ============================================================ -->
     <div class="section" id="appendix">
       <div class="section-header">
-        <span class="section-num">22</span>
+        <span class="section-num">32</span>
         <h2>Appendix</h2>
       </div>
 
@@ -2078,7 +2634,7 @@ score = (
         <p><strong>Project Circle — Master Blueprint v4.0</strong></p>
         <p>May 2026 — Confidential, Internal Use Only</p>
         <p>Designed by Greg Anthony + Markus Corvus</p>
-        <p style="margin-top: 16px; font-size: 11px;">22 sections · Engineering-grade · Design-first · Trust-centered</p>
+        <p style="margin-top: 16px; font-size: 11px;">32 sections · Engineering-grade · Design-first · Trust-centered</p>
       </div>
     </div>
 
@@ -2086,6 +2642,41 @@ score = (
 </div> <!-- /main -->
 
 <script>
+  // Theme toggle
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    if (next === 'dark') {
+      html.removeAttribute('data-theme');
+    } else {
+      html.setAttribute('data-theme', next);
+    }
+    localStorage.setItem('circle-theme', next);
+    updateThemeButton(next);
+  }
+
+  function updateThemeButton(theme) {
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+    if (theme === 'light') {
+      icon.textContent = '☾'; // moon
+      label.textContent = 'Dark';
+    } else {
+      icon.textContent = '☀'; // sun
+      label.textContent = 'Light';
+    }
+  }
+
+  // Load saved theme
+  (function() {
+    const saved = localStorage.getItem('circle-theme');
+    if (saved === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+      updateThemeButton('light');
+    }
+  })();
+
   // Navigation
   function goTo(id) {
     const el = document.getElementById(id);
@@ -2130,5 +2721,4 @@ score = (
   document.querySelectorAll('.section[id]').forEach(section => observer.observe(section));
 </script>
 
-</body>
-</html>
+</body></html>
