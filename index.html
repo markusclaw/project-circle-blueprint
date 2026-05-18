@@ -3,339 +3,2132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Circle Blueprint — Trust-Centered Dating App</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <title>Project Circle — Master Blueprint v4.0</title>
   <style>
     :root {
-      --circle-black: #1A1A1A;
-      --circle-white: #FFFFFF;
+      --bg: #0D0D0D;
+      --bg-surface: #161616;
+      --bg-elevated: #1E1E1E;
+      --bg-card: #1A1A1A;
+      --text-primary: #F0F0F0;
+      --text-secondary: #A0A0A0;
+      --text-tertiary: #666;
+      --border: #2A2A2A;
+      --border-light: #333;
       --emerald: #2D6A4F;
-      --emerald-dark: #1F4A39;
-      --warm-neutral: #D4B5A0;
-      --text-secondary: #6B6B6B;
-      --text-tertiary: #A0A0A0;
-      --border: #E8E8E8;
-      --surface: #F5F5F5;
+      --emerald-light: #3D8B6A;
+      --emerald-glow: rgba(45, 106, 79, 0.15);
+      --coral: #E8956F;
+      --sky: #6B9AC4;
+      --sage: #7BA489;
+      --rose: #D4A5A5;
+      --indigo: #5B4B8A;
+      --amber: #D4A24E;
+      --red: #C75050;
+      --warm: #D4B5A0;
+      --accent: var(--emerald-light);
     }
 
-    * { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Avenir', sans-serif; }
-    body { color: var(--circle-black); background: var(--circle-white); line-height: 1.6; }
-    h1, h2, h3, h4 { font-weight: 700; }
-    h1 { font-size: 48px; line-height: 56px; }
-    h2 { font-size: 36px; line-height: 44px; margin-top: 32px; margin-bottom: 16px; }
-    h3 { font-size: 24px; line-height: 32px; margin-top: 24px; margin-bottom: 12px; }
-    h4 { font-size: 18px; margin-top: 16px; margin-bottom: 8px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+      background: var(--bg); color: var(--text-primary); line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
 
+    /* Sidebar */
     .sidebar {
-      position: fixed; left: 0; top: 0; width: 300px; height: 100vh;
-      background: var(--surface); border-right: 1px solid var(--border);
-      overflow-y: auto; padding: 24px 0; z-index: 40;
-      transition: transform 300ms ease-out;
+      position: fixed; left: 0; top: 0; width: 280px; height: 100vh;
+      background: var(--bg-surface); border-right: 1px solid var(--border);
+      overflow-y: auto; z-index: 100; display: flex; flex-direction: column;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
+
+    .sidebar-brand {
+      padding: 28px 24px 20px; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: var(--bg-surface); z-index: 2;
+    }
+    .sidebar-brand h1 {
+      font-size: 16px; font-weight: 700; letter-spacing: 0.5px;
+      color: var(--emerald-light); margin-bottom: 4px;
+    }
+    .sidebar-brand .version {
+      font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.3px;
+    }
+    .sidebar-brand .status {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; color: var(--sage); margin-top: 8px;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .sidebar-brand .status::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--sage); display: inline-block;
     }
 
-    .sidebar.hidden-mobile {
-      transform: translateX(-100%);
+    .nav-group { padding: 16px 0; }
+    .nav-group-label {
+      padding: 0 24px; font-size: 10px; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--text-tertiary); margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 24px; font-size: 13px; color: var(--text-secondary);
+      cursor: pointer; border-left: 2px solid transparent;
+      transition: all 150ms ease;
+    }
+    .nav-item:hover { color: var(--text-primary); background: rgba(255,255,255,0.03); }
+    .nav-item.active {
+      color: var(--emerald-light); border-left-color: var(--emerald-light);
+      background: var(--emerald-glow); font-weight: 500;
+    }
+    .nav-item .nav-num {
+      font-size: 10px; color: var(--text-tertiary); min-width: 20px;
+      font-variant-numeric: tabular-nums;
+    }
+    .nav-item .nav-badge {
+      margin-left: auto; font-size: 9px; padding: 2px 6px;
+      border-radius: 3px; font-weight: 600; text-transform: uppercase;
+    }
+    .nav-badge.tbd { background: rgba(212,162,78,0.15); color: var(--amber); }
+    .nav-badge.done { background: rgba(123,164,137,0.15); color: var(--sage); }
+    .nav-badge.new { background: rgba(107,154,196,0.15); color: var(--sky); }
+
+    /* Main */
+    .main { margin-left: 280px; min-height: 100vh; }
+
+    /* Top bar */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(13,13,13,0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); padding: 12px 48px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .breadcrumb { font-size: 12px; color: var(--text-tertiary); }
+    .breadcrumb span { color: var(--text-secondary); }
+    .topbar-right { margin-left: auto; display: flex; gap: 12px; align-items: center; }
+    .topbar-badge {
+      font-size: 10px; padding: 4px 10px; border-radius: 4px;
+      border: 1px solid var(--border); color: var(--text-tertiary);
     }
 
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 280px;
-      }
-      
-      .sidebar.hidden-mobile {
-        transform: translateX(-100%);
-      }
+    /* Content */
+    .content { max-width: 860px; margin: 0 auto; padding: 48px; }
+
+    /* Section */
+    .section { margin-bottom: 64px; }
+    .section-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 32px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      font-size: 12px; font-weight: 700; color: var(--emerald-light);
+      min-width: 32px; font-variant-numeric: tabular-nums;
+    }
+    .section h2 {
+      font-size: 28px; font-weight: 700; letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+    .section h3 {
+      font-size: 20px; font-weight: 600; margin: 32px 0 16px;
+      color: var(--text-primary);
+    }
+    .section h4 {
+      font-size: 16px; font-weight: 600; margin: 24px 0 12px;
+      color: var(--text-secondary);
+    }
+    .section p { margin-bottom: 16px; color: var(--text-secondary); font-size: 15px; }
+    .section strong { color: var(--text-primary); }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; margin: 16px 0;
+    }
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .card-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--text-tertiary); margin-bottom: 8px; font-weight: 600;
+    }
+    .card-value { font-size: 24px; font-weight: 700; color: var(--text-primary); }
+    .card-detail { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+    /* Callouts */
+    .callout {
+      border-left: 3px solid var(--emerald); background: var(--emerald-glow);
+      padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 20px 0;
+      font-size: 14px; color: var(--text-secondary);
+    }
+    .callout strong { color: var(--emerald-light); }
+    .callout.warn { border-left-color: var(--amber); background: rgba(212,162,78,0.08); }
+    .callout.warn strong { color: var(--amber); }
+    .callout.critical { border-left-color: var(--red); background: rgba(199,80,80,0.08); }
+    .callout.critical strong { color: var(--red); }
+    .callout.info { border-left-color: var(--sky); background: rgba(107,154,196,0.08); }
+    .callout.info strong { color: var(--sky); }
+
+    /* TBD marker */
+    .tbd {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(212,162,78,0.1); border: 1px dashed rgba(212,162,78,0.3);
+      color: var(--amber); padding: 8px 14px; border-radius: 6px;
+      font-size: 12px; font-weight: 500; margin: 8px 0;
+    }
+    .tbd::before { content: '◇'; }
+
+    /* Tables */
+    table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 13px;
+    }
+    th {
+      text-align: left; padding: 10px 14px;
+      background: var(--bg-elevated); color: var(--text-tertiary);
+      font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+      font-weight: 600; border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 10px 14px; border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* Code / Schema */
+    .schema {
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px; margin: 16px 0;
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px;
+      line-height: 1.8; overflow-x: auto; color: var(--text-secondary);
+    }
+    .schema .kw { color: var(--coral); }
+    .schema .type { color: var(--sky); }
+    .schema .str { color: var(--sage); }
+    .schema .comment { color: var(--text-tertiary); font-style: italic; }
+    .schema .table-name { color: var(--amber); font-weight: 600; }
+
+    /* Expandable */
+    .expandable { margin: 12px 0; }
+    .expand-trigger {
+      display: flex; align-items: center; gap: 10px;
+      cursor: pointer; padding: 12px 16px;
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      border-radius: 8px; font-size: 14px; color: var(--text-primary);
+      transition: all 150ms ease; user-select: none;
+    }
+    .expand-trigger:hover { border-color: var(--emerald); }
+    .expand-trigger .arrow {
+      font-size: 10px; color: var(--text-tertiary);
+      transition: transform 200ms ease;
+    }
+    .expand-trigger.open .arrow { transform: rotate(90deg); }
+    .expand-trigger .expand-label { font-weight: 500; }
+    .expand-trigger .expand-badge {
+      margin-left: auto; font-size: 10px; color: var(--text-tertiary);
+    }
+    .expand-body {
+      display: none; padding: 20px;
+      border: 1px solid var(--border); border-top: none;
+      border-radius: 0 0 8px 8px; background: var(--bg-card);
+    }
+    .expand-body.open { display: block; }
+
+    /* Lists */
+    ul, ol { margin: 12px 0 12px 20px; }
+    li {
+      margin-bottom: 8px; color: var(--text-secondary);
+      font-size: 14px; line-height: 1.6;
+    }
+    li strong { color: var(--text-primary); }
+
+    /* Flow diagram */
+    .flow {
+      display: flex; align-items: center; gap: 0;
+      margin: 24px 0; flex-wrap: wrap;
+    }
+    .flow-step {
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      padding: 12px 18px; border-radius: 8px; font-size: 12px;
+      color: var(--text-primary); font-weight: 500; text-align: center;
+      min-width: 100px;
+    }
+    .flow-arrow {
+      color: var(--text-tertiary); font-size: 16px; padding: 0 8px;
     }
 
-    .sidebar-header { padding: 0 20px 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
-    .sidebar-header h1 { font-size: 18px; margin: 0; color: var(--emerald); }
-    .sidebar-header p { font-size: 12px; color: var(--text-tertiary); margin: 4px 0 0 0; }
-
-    .sidebar-nav { list-style: none; padding: 0; margin: 0; }
-    .sidebar-nav > li { margin: 0; }
-    .sidebar-nav a {
-      display: block; padding: 10px 20px; color: var(--circle-black); text-decoration: none;
-      font-size: 14px; border-left: 3px solid transparent; transition: all 150ms ease-out;
+    /* Personality rings (CSS only) */
+    .rings-container {
+      display: flex; justify-content: center; align-items: center;
+      padding: 40px; margin: 24px 0;
     }
-    .sidebar-nav a:hover { background: rgba(45, 106, 79, 0.08); color: var(--emerald); }
-    .sidebar-nav a.active { background: rgba(45, 106, 79, 0.12); border-left-color: var(--emerald); color: var(--emerald); font-weight: 600; }
-
-    .main-content { margin-left: 300px; min-height: 100vh; padding: 0; }
-    .content-header {
-      position: sticky; top: 0; background: var(--circle-white);
-      border-bottom: 1px solid var(--border); padding: 16px 32px;
-      display: flex; gap: 16px; align-items: center; z-index: 30;
+    .rings {
+      position: relative; width: 220px; height: 220px;
     }
-
-    .search-container { flex: 1; max-width: 500px; position: relative; }
-    .search-input {
-      width: 100%; padding: 12px 16px; border: 1px solid var(--border);
-      border-radius: 8px; font-size: 14px; transition: all 150ms ease-out;
+    .ring {
+      position: absolute; border-radius: 50%; border: 3px solid;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
     }
-    .search-input:focus { outline: none; border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1); }
-
-    .search-results {
-      position: absolute; top: 100%; left: 0; right: 0; background: var(--circle-white);
-      border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px;
-      max-height: 400px; overflow-y: auto; z-index: 50; margin-top: -1px;
+    .ring-1 { width: 220px; height: 220px; border-color: var(--sky); opacity: 0.7; }
+    .ring-2 { width: 180px; height: 180px; border-color: var(--sage); opacity: 0.7; }
+    .ring-3 { width: 140px; height: 140px; border-color: var(--coral); opacity: 0.7; }
+    .ring-4 { width: 100px; height: 100px; border-color: var(--rose); opacity: 0.7; }
+    .ring-5 { width: 60px; height: 60px; border-color: var(--indigo); opacity: 0.7; }
+    .ring-center {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-size: 11px; font-weight: 700; color: var(--text-primary);
     }
 
-    .search-result-item {
-      padding: 12px 16px; border-bottom: 1px solid var(--border);
-      cursor: pointer; transition: all 150ms ease-out;
+    /* Color swatches */
+    .swatches { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+    .swatch {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 14px; background: var(--bg-elevated);
+      border: 1px solid var(--border); border-radius: 8px;
     }
-    .search-result-item:hover { background: var(--surface); }
-    .search-result-item strong { color: var(--emerald); display: block; font-size: 13px; margin-bottom: 4px; }
-    .search-result-item span { color: var(--text-secondary); font-size: 12px; }
-
-    .content-body { padding: 48px 64px; max-width: 900px; margin: 0 auto; }
-    .content-body > h1:first-child { margin-top: 0; }
-
-    .section-nav { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-    .section-nav button {
-      padding: 6px 12px; background: var(--surface); border: 1px solid var(--border);
-      border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 150ms ease-out;
+    .swatch-color {
+      width: 20px; height: 20px; border-radius: 4px;
     }
-    .section-nav button.active { background: var(--emerald); color: var(--circle-white); border-color: var(--emerald); }
-    .section-nav button:hover { border-color: var(--emerald); }
+    .swatch-label { font-size: 12px; color: var(--text-secondary); }
+    .swatch-hex { font-size: 11px; color: var(--text-tertiary); font-family: monospace; }
 
-    .page-number {
-      position: fixed; bottom: 20px; right: 20px; font-size: 12px;
-      color: var(--text-tertiary); background: var(--surface);
-      padding: 8px 12px; border: 1px solid var(--border); border-radius: 4px;
+    /* Stats row */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0; }
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; text-align: center;
     }
-
-    code { background: var(--surface); padding: 2px 6px; border-radius: 3px; font-size: 13px; color: var(--emerald); }
-    pre { background: var(--surface); padding: 16px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin: 16px 0; }
-    pre code { background: none; padding: 0; color: var(--circle-black); }
-
-    .breadcrumb { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; }
-    .breadcrumb span { color: var(--text-tertiary); }
-
-    @media (max-width: 768px) {
-      .sidebar { width: 250px; }
-      .main-content { margin-left: 0; }
-      .content-body { padding: 24px 20px; }
-      .sidebar.hidden { display: none; }
-      .sidebar-toggle { display: flex; }
+    .stat-value { font-size: 28px; font-weight: 700; color: var(--text-primary); }
+    .stat-label {
+      font-size: 11px; color: var(--text-tertiary); text-transform: uppercase;
+      letter-spacing: 1px; margin-top: 4px;
     }
 
-    .sidebar-toggle {
-      display: none; gap: 8px; align-items: center; background: none;
-      border: none; cursor: pointer; color: var(--circle-black); font-size: 18px;
-      padding: 8px 12px; transition: all 150ms ease-out;
+    /* Tag */
+    .tag {
+      display: inline-block; font-size: 10px; padding: 3px 8px;
+      border-radius: 4px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .sidebar-toggle:hover { color: var(--emerald); }
+    .tag-green { background: rgba(123,164,137,0.15); color: var(--sage); }
+    .tag-amber { background: rgba(212,162,78,0.15); color: var(--amber); }
+    .tag-red { background: rgba(199,80,80,0.15); color: var(--red); }
+    .tag-blue { background: rgba(107,154,196,0.15); color: var(--sky); }
 
-    .sidebar-overlay {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.5); z-index: 35;
-      display: none;
-      opacity: 0;
-      transition: opacity 300ms ease-out;
+    /* Separator */
+    hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* Responsive */
+    .mobile-toggle {
+      display: none; background: none; border: none;
+      color: var(--text-primary); font-size: 20px; cursor: pointer;
+      padding: 8px;
+    }
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); transition: transform 250ms ease; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .topbar { padding: 12px 20px; }
+      .content { padding: 24px 20px; }
+      .mobile-toggle { display: block; }
+      .card-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .flow { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); }
     }
 
-    .sidebar-overlay.active {
-      display: block;
-      opacity: 1;
+    /* Print */
+    @media print {
+      .sidebar, .topbar { display: none; }
+      .main { margin-left: 0; }
+      .content { max-width: 100%; padding: 20px; }
+      body { background: #fff; color: #1a1a1a; }
+      .card, .schema, .expand-body { border-color: #ddd; background: #f9f9f9; }
     }
 
-    @media (max-width: 768px) {
-      .sidebar-toggle { display: flex; }
-      .main-content { margin-left: 0; }
-      .content-header { padding: 12px 16px; }
-      .content-body { padding: 24px 16px; }
-      .page-number { bottom: 16px; right: 16px; font-size: 11px; }
-      h1 { font-size: 32px; line-height: 40px; }
-      h2 { font-size: 24px; line-height: 32px; margin-top: 24px; }
-      h3 { font-size: 18px; line-height: 26px; }
-      .search-container { max-width: none; flex: 1; }
-      .search-input { font-size: 16px; }
-      .section-nav { display: none; }
+    /* Overlay */
+    .overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6); z-index: 99;
     }
+    .overlay.open { display: block; }
   </style>
 </head>
 <body>
-  <div id="app" class="flex">
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    <div class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <h1>Project Circle</h1>
-        <p>v3.3 Blueprint • May 2026</p>
-      </div>
-      <nav class="sidebar-nav" id="sidebarNav"></nav>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <h1>⭕ Project Circle</h1>
+    <div class="version">Master Blueprint v4.0 — May 2026</div>
+    <div class="status">Internal Document</div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Foundation</div>
+    <div class="nav-item active" onclick="goTo('exec')" data-section="exec">
+      <span class="nav-num">01</span> Executive Summary
     </div>
-
-    <div class="main-content">
-      <div class="content-header">
-        <button class="sidebar-toggle" id="sidebarToggle" title="Open menu">☰</button>
-        <div class="search-container">
-          <input type="text" id="searchInput" class="search-input" placeholder="Search blueprint..." autocomplete="off">
-          <div id="searchResults" class="search-results" style="display: none;"></div>
-        </div>
-      </div>
-
-      <div class="content-body" id="content">
-        <h1>Project Circle Blueprint</h1>
-        <p style="color: var(--text-secondary); font-size: 18px; margin-top: 0;">Trust-Centered Dating App — Strategic Blueprint v3.3</p>
-        <p style="color: var(--text-secondary);">A comprehensive system document covering product strategy, AI integration, design direction, resource planning, and monetization for Project Circle.</p>
-        <hr style="margin: 32px 0; border: none; border-top: 1px solid var(--border);">
-        <div class="section-nav" id="sectionNav"></div>
-      </div>
-
-      <div class="page-number" id="pageNumber">Page 1</div>
+    <div class="nav-item" onclick="goTo('principles')" data-section="principles">
+      <span class="nav-num">02</span> Core Principles
+    </div>
+    <div class="nav-item" onclick="goTo('competitive')" data-section="competitive">
+      <span class="nav-num">03</span> Competitive Landscape
+      <span class="nav-badge new">new</span>
+    </div>
+    <div class="nav-item" onclick="goTo('personas')" data-section="personas">
+      <span class="nav-num">04</span> User Personas
+      <span class="nav-badge new">new</span>
     </div>
   </div>
 
-  <script>
-    // Mobile sidebar toggle
-    function initMobileMenus() {
-      const toggle = document.getElementById('sidebarToggle');
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('sidebarOverlay');
+  <div class="nav-group">
+    <div class="nav-group-label">Product</div>
+    <div class="nav-item" onclick="goTo('personality')" data-section="personality">
+      <span class="nav-num">05</span> Personality Architecture
+    </div>
+    <div class="nav-item" onclick="goTo('concierge')" data-section="concierge">
+      <span class="nav-num">06</span> Concierge MVP
+    </div>
+    <div class="nav-item" onclick="goTo('ux')" data-section="ux">
+      <span class="nav-num">07</span> UX Flows & Screens
+      <span class="nav-badge new">new</span>
+    </div>
+    <div class="nav-item" onclick="goTo('design')" data-section="design">
+      <span class="nav-num">08</span> Design System
+    </div>
+  </div>
 
-      toggle.addEventListener('click', () => {
-        sidebar.classList.toggle('hidden-mobile');
-        overlay.classList.toggle('active');
-      });
+  <div class="nav-group">
+    <div class="nav-group-label">Engineering</div>
+    <div class="nav-item" onclick="goTo('arch')" data-section="arch">
+      <span class="nav-num">09</span> Technical Architecture
+      <span class="nav-badge new">new</span>
+    </div>
+    <div class="nav-item" onclick="goTo('db')" data-section="db">
+      <span class="nav-num">10</span> Database Schema
+      <span class="nav-badge new">new</span>
+    </div>
+    <div class="nav-item" onclick="goTo('api')" data-section="api">
+      <span class="nav-num">11</span> API Specification
+      <span class="nav-badge new">new</span>
+    </div>
+    <div class="nav-item" onclick="goTo('ai')" data-section="ai">
+      <span class="nav-num">12</span> AI/LLM Pipeline
+    </div>
+    <div class="nav-item" onclick="goTo('infra')" data-section="infra">
+      <span class="nav-num">13</span> Infrastructure & DevOps
+      <span class="nav-badge new">new</span>
+    </div>
+  </div>
 
-      overlay.addEventListener('click', () => {
-        sidebar.classList.add('hidden-mobile');
-        overlay.classList.remove('active');
-      });
+  <div class="nav-group">
+    <div class="nav-group-label">Trust & Safety</div>
+    <div class="nav-item" onclick="goTo('privacy')" data-section="privacy">
+      <span class="nav-num">14</span> Privacy Architecture
+    </div>
+    <div class="nav-item" onclick="goTo('safety')" data-section="safety">
+      <span class="nav-num">15</span> Safety & Moderation
+    </div>
+  </div>
 
-      // Close sidebar when a nav item is clicked (mobile)
-      document.querySelectorAll('.sidebar-nav a').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 768) {
-            sidebar.classList.add('hidden-mobile');
-            overlay.classList.remove('active');
-          }
-        });
-      });
+  <div class="nav-group">
+    <div class="nav-group-label">Business</div>
+    <div class="nav-item" onclick="goTo('monetization')" data-section="monetization">
+      <span class="nav-num">16</span> Monetization & Pricing
+    </div>
+    <div class="nav-item" onclick="goTo('gtm')" data-section="gtm">
+      <span class="nav-num">17</span> Go-to-Market
+      <span class="nav-badge new">new</span>
+    </div>
+    <div class="nav-item" onclick="goTo('budget')" data-section="budget">
+      <span class="nav-num">18</span> Budget & Resources
+    </div>
+    <div class="nav-item" onclick="goTo('risk')" data-section="risk">
+      <span class="nav-num">19</span> Risk Management
+    </div>
+  </div>
 
-      // Hide sidebar on desktop
-      window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-          sidebar.classList.remove('hidden-mobile');
-          overlay.classList.remove('active');
-        }
-      });
-    }
+  <div class="nav-group">
+    <div class="nav-group-label">Execution</div>
+    <div class="nav-item" onclick="goTo('roadmap')" data-section="roadmap">
+      <span class="nav-num">20</span> 20-Week Roadmap
+    </div>
+    <div class="nav-item" onclick="goTo('metrics')" data-section="metrics">
+      <span class="nav-num">21</span> Success Metrics
+    </div>
+    <div class="nav-item" onclick="goTo('appendix')" data-section="appendix">
+      <span class="nav-num">22</span> Appendix
+    </div>
+  </div>
+</nav>
 
-    const blueprint = [
-      { id: 'summary', title: 'Executive Summary', page: 1, content: '# Executive Summary\n\nProject Circle is a trust-centered introduction platform built around self-knowledge, intentionality, and socially grounded human connection.\n\n**Core Thesis:** People are exhausted by algorithmic attention economies disguised as connection tools. Circle inverts that model.\n\n## What Circle Does\n- Understand yourself deeply (Jungian/MBTI/Big Five frameworks)\n- Clarify values and relationship patterns\n- Build trusted social context\n- Receive curated introductions grounded in compatibility and social proximity\n\nThis is not a speed-dating app. It\'s a self-discovery platform where connection is the byproduct of intentional self-knowledge.' },
-      { id: 'principles', title: 'Core Product Principles', page: 3, content: '# Core Product Principles\n\n**1. Trust Over Engagement** - No infinite swiping, no boosts, no addiction loops\n\n**2. Self-Knowledge First** - Primary output is self-understanding, connection is a byproduct\n\n**3. Human-Centered AI** - Users feel understood, not analyzed\n\n**4. Real-World Connection** - Digital interaction is transitional. App creates healthier real-world relationships\n\n**5. Safety is Infrastructure** - Safety is visual language, interaction pacing, identity verification, moderation, emotional atmosphere\n\n**6. Intentionality Over Scale** - Launch deep not broad. Density > growth rate' },
-      { id: 'design', title: 'Design Direction: The Mirror', page: 11, content: '# Design Direction: "The Mirror"\n\n## Why This Concept Won\n\n**Visual Hook:** Watching personality emerge real-time is the "wow moment"  \n**Brand Coherence:** Concentric circle logo becomes literal personality visualization  \n**Engagement:** Users gain value while building trust  \n**Differentiation:** Hinge/Bumble have nothing like this\n\n## Implementation\n\n**Welcome Screen:** "Discover Your True Reflection" with animated concentric circles  \n**Assessment:** Each answer adds color/width to personality rings. Big Five scores visible live  \n**Results:** Full personality portrait with all 5 colors, MBTI type, narrative interpretation\n\n## Colors\n- Openness: #6B9AC4 (Sky Blue)\n- Conscientiousness: #7BA489 (Sage Green)\n- Extraversion: #E8956F (Warm Coral)\n- Agreeableness: #D4A5A5 (Soft Rose)\n- Emotional Stability: #5B4B8A (Deep Indigo)' },
-      { id: 'ai', title: 'AI/LLM Integration', page: 14, content: '# AI/LLM Integration Architecture\n\nAI in Circle is the operational backbone of personality assessment and longitudinal learning.\n\n## AI Transparency & User Control\n- Users see all conclusions Claude made\n- Users can edit/reject any assessment\n- Request human review for disagreement\n- Curator reassesses within 48 hours\n\n## Phase 1: Assessment Engine\n- Claude API for personality interviews\n- Vector embeddings (1536-dim)\n- PostgreSQL with pgvector for similarity search\n- Phase 1: 100% human review of all matches\n\n## Cost Model\n- Per-user AI cost: ~$0.40-0.50/month\n- Initial assessment: ~$0.30\n- Revenue target: $20/month → 40x margin' },
-      { id: 'roadmap', title: '20-Week Roadmap', page: 17, content: '# Product Roadmap: 20 Weeks\n\n**Phase 0 (Weeks 1-4):** Validation. 30-50 interviews, community selection, monetization proof\n\n**Phase 1a (Weeks 5-8):** MVP Launch. 50 beta users, 100% manual curation. Cost: $1.2k/mo\n\n**Phase 1b (Weeks 9-12):** Growth. 250-300 users, curator dashboard, feedback loops. Cost: $2.8k/mo\n\n**Phase 2 (Weeks 13-16):** Algorithmic Matching. 500-750 users, semi-automated matching. Cost: $5.5k/mo\n\n**Phase 3 (Weeks 17-20+):** Public Beta. 1500-2000+ users, multi-region. Cost: $12-15k/mo' },
-      { id: 'money', title: 'Financials & Monetization', page: 20, content: '# Financial Model\n\n## Pricing\n- Long-term: $19.99/month or $149/year\n- Founding: $14.99/month (early adopters)\n- Student: $5/month (limited intros)\n- B2B: $500/month per team\n\n## Three Segments\n| Segment | Price | Conversion | LTV |\n| Student | $5/mo | 30% | $60 |\n| High-Intent | $20/mo | 50% | $240 |\n| Corporate | $500/mo | 20% | $6,000 |\n\n## Budget: $470k (20 weeks)\n- Personnel: $380k\n- Infrastructure: $12k\n- AI/LLM: $8k\n- Security: $15k\n- Marketing: $30k\n\n## Projections (Week 20)\n- 500 users\n- 300 paid (60%)\n- $3,600 MRR\n- 78% gross margin' },
-      { id: 'metrics', title: 'Success Metrics', page: 24, content: '# Success Metrics & KPIs\n\n## North Star (NOT DAU or time-on-app)\n- Real-world introductions completed\n- Successful real-world meetings\n- Account pause rate (success signal!)\n- Referral rate (≥5% is good)\n- Trust score (average user)\n- Emotional satisfaction (≥8/10)\n- Onboarding completion (≥80%)\n\n## Phase 0 Validation (Week 4 Go/No-Go)\n✓ Users will complete onboarding\n✓ Curated intros feel better than swiping\n✓ Users willing to pay (≥60%)\n✓ Community + early users confirmed\n\n## Phase 1 Validation (Week 8)\n✓ Onboarding ≥80%\n✓ Intros accepted ≥40%\n✓ Real meetings ≥1 per 10 users\n✓ Retention >60%\n✓ Referral ≥5%' },
-      { id: 'appendix', title: 'Appendix & References', page: 26, content: '# Appendix\n\n## Phase 0 Interview Framework (30 Questions)\n\nSection 1: Dating App Fatigue (7Q)\n- Experience with traditional apps?\n- What frustrates you most?\n- Have you quit? Why?\n- What would change your mind?\n- How do you feel about swiping?\n- Do you trust matches?\n- Conversations vs. real dates?\n\nSection 2: Self-Knowledge (6Q)\n- Interested in understanding yourself?\n- MBTI/Big Five/Attachment theory?\n- Complete 15-min assessment?\n- Want personality insights?\n- AI interview comfortable?\n- What makes you feel understood?\n\nSection 3: Pricing (3Q)\n- Would you pay for meaningful matches?\n- What\'s fair price/month?\n- Subscribe or pay-per-match?\n\n## GDPR/CCPA Compliance\n✓ Consent reviewed by counsel\n✓ Export profile (JSON/CSV)\n✓ Request deletion (30-day grace)\n✓ Breach response (<72h notification)\n✓ Data minimization\n✓ Encrypted storage' }
-    ];
+<div class="main">
+  <div class="topbar">
+    <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="breadcrumb">
+      Project Circle Blueprint <span>›</span> <span id="breadcrumbSection">Executive Summary</span>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-badge">Confidential</span>
+      <span class="topbar-badge">v4.0</span>
+    </div>
+  </div>
 
-    let currentPage = 1;
-    let fuse = null;
+  <div class="content">
 
-    function initNavigation() {
-      const sidebarNav = document.getElementById('sidebarNav');
-      const sectionNav = document.getElementById('sectionNav');
+    <!-- ============================================================ -->
+    <!-- 01. EXECUTIVE SUMMARY -->
+    <!-- ============================================================ -->
+    <div class="section" id="exec">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Executive Summary</h2>
+      </div>
 
-      blueprint.forEach((section) => {
-        const sidebarItem = document.createElement('a');
-        sidebarItem.href = '#';
-        sidebarItem.textContent = section.title;
-        sidebarItem.dataset.id = section.id;
-        sidebarItem.onclick = (e) => {
-          e.preventDefault();
-          loadSection(section.id);
-          document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-          sidebarItem.classList.add('active');
-        };
-        sidebarNav.appendChild(sidebarItem);
+      <p><strong>Project Circle</strong> is a trust-centered introduction platform built around self-knowledge, intentionality, and socially grounded human connection. It is not a dating app — it is relationship infrastructure.</p>
 
-        const btn = document.createElement('button');
-        btn.textContent = section.title;
-        btn.dataset.section = section.id;
-        btn.onclick = () => loadSection(section.id);
-        sectionNav.appendChild(btn);
-      });
+      <div class="callout">
+        <strong>Core Thesis:</strong> People are exhausted by algorithmic attention economies disguised as connection tools. Circle inverts that model by making the primary output self-understanding, with meaningful connection as a byproduct of intentional self-knowledge.
+      </div>
 
-      document.querySelector('.sidebar-nav a').classList.add('active');
-      document.querySelector('[data-section]').classList.add('active');
-    }
+      <h3>What Circle Does</h3>
+      <p>The platform helps users understand themselves deeply through a five-layer personality assessment (MBTI, Big Five, Attachment Theory, Communication Style, and Dynamic Behavioral Learning), then uses that understanding to facilitate curated, trust-grounded introductions within socially dense communities.</p>
 
-    function loadSection(id) {
-      const section = blueprint.find(s => s.id === id);
-      if (!section) return;
+      <h3>Why Now</h3>
+      <p>The $9B+ dating app market is structurally misaligned with users. More swiping equals more revenue. More churn equals more subscriptions. More emotional volatility equals more engagement. Circle aligns incentives differently — the platform succeeds when users form real relationships and leave the app.</p>
 
-      currentPage = section.page;
-      const contentDiv = document.getElementById('content');
-      const pageNum = document.getElementById('pageNumber');
-      
-      contentDiv.innerHTML = `
-        <div class="breadcrumb">
-          <span>Project Circle Blueprint</span>
-          <span>•</span>
-          <span>${section.title}</span>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value">$470K</div>
+          <div class="stat-label">20-Week Budget</div>
         </div>
-        <div id="sectionContent" style="margin-top: 24px;">${section.content.replace(/\n/g, '<br>')}</div>
-      `;
-      
-      pageNum.textContent = `Page ${currentPage}`;
-      window.scrollTo(0, 0);
-    }
+        <div class="stat-card">
+          <div class="stat-value">500</div>
+          <div class="stat-label">Target Users (W20)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">$3.6K</div>
+          <div class="stat-label">MRR Goal</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">78%</div>
+          <div class="stat-label">Gross Margin</div>
+        </div>
+      </div>
 
-    function initSearch() {
-      const searchData = blueprint.map(section => ({ id: section.id, title: section.title, page: section.page, content: section.content }));
-      fuse = new Fuse(searchData, { keys: ['title', 'content'], threshold: 0.3, minMatchCharLength: 2 });
+      <h3>The Moat</h3>
+      <p>The competitive advantage is not primarily the LLM. The long-term moat becomes trusted identity systems, dense trusting networks, longitudinal behavioral learning, compatibility feedback loops, and emotional trust as structural advantage. Competitors starting from scratch cannot replicate compounding personality data.</p>
 
-      const searchInput = document.getElementById('searchInput');
-      const searchResults = document.getElementById('searchResults');
+      <h3>Design Philosophy</h3>
+      <p>The product should feel <strong>calm</strong> (opposite of frantic swiping), <strong>intentional</strong> (every interaction meaningful), <strong>safe</strong> (identity trusted, behavior moderated), <strong>human</strong> (emotionally intelligent, warm), and <strong>premium</strong> (sophisticated, not cluttered). The AI is infrastructural, not theatrical — it should feel like being understood, not profiled.</p>
+    </div>
 
-      searchInput.addEventListener('input', (e) => {
-        const query = e.target.value;
-        if (!query) { searchResults.style.display = 'none'; return; }
+    <hr>
 
-        const results = fuse.search(query).slice(0, 8);
-        if (results.length === 0) {
-          searchResults.innerHTML = '<div style="padding: 12px 16px; color: var(--text-secondary); font-size: 12px;">No results found</div>';
-          searchResults.style.display = 'block';
-          return;
-        }
+    <!-- ============================================================ -->
+    <!-- 02. CORE PRINCIPLES -->
+    <!-- ============================================================ -->
+    <div class="section" id="principles">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Core Product Principles</h2>
+      </div>
 
-        searchResults.innerHTML = results.map(result => `
-          <div class="search-result-item" onclick="document.getElementById('searchInput').value = ''; document.getElementById('searchResults').style.display = 'none'; document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active')); document.querySelector('[data-id=\\\"${result.item.id}\\\"]').classList.add('active'); loadSection('${result.item.id}');">
-            <strong>${result.item.title}</strong>
-            <span>Page ${result.item.page}</span>
+      <p>These principles are non-negotiable. They define every product, design, and engineering decision.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <h4>1. Trust Over Engagement</h4>
+          <p>Circle optimizes for trust and real outcomes, not time-on-app. No infinite swiping, no slot-machine mechanics, no boosts, no addiction loops, no psychological manipulation.</p>
+        </div>
+        <div class="card">
+          <h4>2. Self-Knowledge First</h4>
+          <p>The primary output is self-understanding. Connection is a byproduct. Users gain value even without matches. Personality insights are a product unto themselves. Onboarding should feel reflective, not diagnostic.</p>
+        </div>
+        <div class="card">
+          <h4>3. Human-Centered AI</h4>
+          <p>AI should be invisible and warm. Users feel "I feel understood" — not "I am being analyzed." Conversational tone, not clinical. All AI conclusions visible and overridable by users.</p>
+        </div>
+        <div class="card">
+          <h4>4. Real-World Connection</h4>
+          <p>Digital interaction is transitional. The app exists to create healthier real-world relationships. Circle succeeds when users meet in person, form bonds, and eventually leave the app.</p>
+        </div>
+        <div class="card">
+          <h4>5. Safety Is Infrastructure</h4>
+          <p>Safety is not a backend feature. It is visual language, interaction pacing, identity verification, moderation, and emotional atmosphere. Safety ships in Phase 1, not Phase 5.</p>
+        </div>
+        <div class="card">
+          <h4>6. Intentionality Over Scale</h4>
+          <p>Launch deep, not broad. Network density matters more than raw user count. Trust accumulates in small, high-context communities. Growth follows trust, not vice versa.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Incentive Alignment:</strong> Circle succeeds when introductions feel meaningful, users trust the platform deeply, users form real relationships, users invite others and communities strengthen, and successful users reduce time-on-app because they're living.
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 03. COMPETITIVE LANDSCAPE -->
+    <!-- ============================================================ -->
+    <div class="section" id="competitive">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Competitive Landscape</h2>
+      </div>
+
+      <p>Understanding where Circle sits relative to existing players clarifies the differentiation strategy and market positioning.</p>
+
+      <h3>Direct Competitors</h3>
+      <table>
+        <thead>
+          <tr><th>App</th><th>Model</th><th>Strength</th><th>Weakness (Circle Opportunity)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hinge</strong></td>
+            <td>Prompt-based profiles, like/comment</td>
+            <td>Strong brand, "designed to be deleted"</td>
+            <td>Still swipe-adjacent, shallow prompts, no real personality depth</td>
+          </tr>
+          <tr>
+            <td><strong>Bumble</strong></td>
+            <td>Women-first messaging</td>
+            <td>Brand trust with women, multi-mode (date/friend/biz)</td>
+            <td>Engagement-driven metrics, swiping fatigue, no personality science</td>
+          </tr>
+          <tr>
+            <td><strong>Tinder</strong></td>
+            <td>Swipe + pay-to-win</td>
+            <td>Massive scale, cultural ubiquity</td>
+            <td>Optimizes for addiction, not outcomes; low trust</td>
+          </tr>
+          <tr>
+            <td><strong>The Inner Circle</strong></td>
+            <td>Curated/exclusive</td>
+            <td>Quality positioning, events</td>
+            <td>Elitism without substance; no personality depth</td>
+          </tr>
+          <tr>
+            <td><strong>Thursday</strong></td>
+            <td>One-day-a-week matching</td>
+            <td>Scarcity model, events-first</td>
+            <td>Gimmick-driven, no sustained engagement, no self-knowledge</td>
+          </tr>
+          <tr>
+            <td><strong>Paired / Lasting</strong></td>
+            <td>Relationship health apps</td>
+            <td>Psychological frameworks</td>
+            <td>Post-relationship; don't help people find partners</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Circle's Differentiation</h3>
+      <div class="card">
+        <p><strong>No other app combines all of these:</strong></p>
+        <ul>
+          <li><strong>Five-layer personality science</strong> — not superficial prompts or astrology</li>
+          <li><strong>AI-powered conversational assessment</strong> — not a quiz, a conversation</li>
+          <li><strong>Concierge-curated introductions</strong> — human judgment, not just algorithms</li>
+          <li><strong>Community-grounded trust</strong> — social proximity, not stranger matching</li>
+          <li><strong>Self-knowledge as a standalone product</strong> — value even without matches</li>
+          <li><strong>Real-world connection facilitation</strong> — venue suggestions, event-based intros</li>
+          <li><strong>Full transparency on AI reasoning</strong> — users see and control all assessments</li>
+        </ul>
+      </div>
+
+      <h3>Market Size</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label">Total Addressable Market</div>
+          <div class="card-value">$9.6B</div>
+          <div class="card-detail">Global online dating market (2026 est.)</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Serviceable Market</div>
+          <div class="card-value">$2.1B</div>
+          <div class="card-detail">US premium dating / intentional connection</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Initial Target</div>
+          <div class="card-value">$50M</div>
+          <div class="card-detail">High-intent urban professionals, 25-40</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Adjacent Market</div>
+          <div class="card-value">$1.2B</div>
+          <div class="card-detail">Corporate wellness & personality assessment</div>
+        </div>
+      </div>
+
+      <h3>Positioning Strategy</h3>
+      <p>Circle is not competing on the same axis as Tinder or Bumble. The positioning is: <strong>"The anti-dating app."</strong> Circle is for people who are done swiping and want something that treats them like a whole person, not a profile card. The comparison point is not other dating apps — it's therapy, coaching, and community membership.</p>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 04. USER PERSONAS -->
+    <!-- ============================================================ -->
+    <div class="section" id="personas">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>User Personas</h2>
+      </div>
+
+      <div class="card" style="border-left: 3px solid var(--coral);">
+        <h4>Persona A: "The Exhausted Optimizer" — Maya, 29</h4>
+        <p><strong>Background:</strong> UX designer in San Diego. Has been on Hinge for 3 years. Gets matches but conversations feel shallow and repetitive. Deleted the app twice, came back out of loneliness.</p>
+        <p><strong>Pain:</strong> "I'm tired of performing. I want someone to actually know me, not just my best photos and wittiest prompts."</p>
+        <p><strong>Circle value:</strong> Personality insights give her language for what she's actually looking for. Curated intros skip the small-talk phase. She'd pay $20/month without hesitation.</p>
+        <p><strong>Risk:</strong> If onboarding feels too long (>20 min), she'll bounce. Keep assessment engaging.</p>
+      </div>
+
+      <div class="card" style="border-left: 3px solid var(--sky);">
+        <h4>Persona B: "The Intentional Late Starter" — David, 34</h4>
+        <p><strong>Background:</strong> Software engineer, relocated to Austin. Never been great at dating apps. Introverted (INTJ). Has a small social circle and doesn't meet many new people organically.</p>
+        <p><strong>Pain:</strong> "Apps feel like a popularity contest. I'm not photogenic and I can't do witty banter. I want depth."</p>
+        <p><strong>Circle value:</strong> Personality-first approach levels the playing field. Introductions feel warm, not cold. Self-knowledge is intrinsically valuable to him — he'd use insights even without matches.</p>
+        <p><strong>Risk:</strong> Skeptical of AI. Needs full transparency on how assessments work.</p>
+      </div>
+
+      <div class="card" style="border-left: 3px solid var(--sage);">
+        <h4>Persona C: "The Community Builder" — Priya, 27</h4>
+        <p><strong>Background:</strong> Yoga instructor and community organizer. Values authentic connection deeply. Not necessarily looking for romance — wants deeper friendships and a sense of belonging in her new city.</p>
+        <p><strong>Pain:</strong> "I want to find my people. Not a date — my people. Apps are all about dating and it feels transactional."</p>
+        <p><strong>Circle value:</strong> Multi-intent modes (friendship, community, self-discovery). Event-based introductions align with how she naturally connects. Would become an evangelist and bring her entire yoga community.</p>
+        <p><strong>Risk:</strong> If Circle feels too "dating app," she won't join. Positioning must include non-romantic connection.</p>
+      </div>
+
+      <div class="card" style="border-left: 3px solid var(--indigo);">
+        <h4>Persona D: "The Relationship Coach" — Dr. James, 41</h4>
+        <p><strong>Background:</strong> Licensed therapist specializing in attachment theory. Recommends personality frameworks to clients regularly. Would use Circle professionally and personally.</p>
+        <p><strong>Pain:</strong> "My clients ask me for dating advice but I can't recommend any app in good conscience. They're all designed to keep people addicted."</p>
+        <p><strong>Circle value:</strong> B2B/API potential — he'd license Circle's personality engine for client assessments. Would refer clients directly. High-intent $20/month user. Professional endorsement = massive credibility.</p>
+        <p><strong>Risk:</strong> Needs academic rigor. If the personality science feels "pop psychology," he won't endorse it.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 05. PERSONALITY ARCHITECTURE -->
+    <!-- ============================================================ -->
+    <div class="section" id="personality">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Five-Layer Personality Architecture</h2>
+      </div>
+
+      <p>This is the scientific and product foundation. Each layer serves a distinct purpose and compounds into a rich, multidimensional personality profile.</p>
+
+      <div class="rings-container">
+        <div class="rings">
+          <div class="ring ring-1"></div>
+          <div class="ring ring-2"></div>
+          <div class="ring ring-3"></div>
+          <div class="ring ring-4"></div>
+          <div class="ring ring-5"></div>
+          <div class="ring-center">CORE</div>
+        </div>
+      </div>
+
+      <div class="swatches">
+        <div class="swatch">
+          <div class="swatch-color" style="background: var(--sky);"></div>
+          <div><div class="swatch-label">Openness</div><div class="swatch-hex">#6B9AC4</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: var(--sage);"></div>
+          <div><div class="swatch-label">Conscientiousness</div><div class="swatch-hex">#7BA489</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: var(--coral);"></div>
+          <div><div class="swatch-label">Extraversion</div><div class="swatch-hex">#E8956F</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: var(--rose);"></div>
+          <div><div class="swatch-label">Agreeableness</div><div class="swatch-hex">#D4A5A5</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: var(--indigo);"></div>
+          <div><div class="swatch-label">Emotional Stability</div><div class="swatch-hex">#5B4B8A</div></div>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Layer 1: MBTI (UX & Communication Layer)</span>
+          <span class="expand-badge">Familiarity + Shareability</span>
+        </div>
+        <div class="expand-body">
+          <p><strong>Purpose:</strong> Familiarity, shareability, conversational framing. People understand and love MBTI — it's culturally recognizable. It is NOT the scientific backbone, but the user-facing personality language.</p>
+          <p><strong>Implementation:</strong> Derived from Big Five scores, not assessed separately. Displayed prominently on user profiles as a recognizable anchor point.</p>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Layer 2: Big Five / OCEAN (Scientific Engine)</span>
+          <span class="expand-badge">Primary Foundation</span>
+        </div>
+        <div class="expand-body">
+          <p><strong>Purpose:</strong> The most stable, validated personality framework in psychology. Directly maps to relationship compatibility research. This is the backbone of all matching logic.</p>
+          <ul>
+            <li><strong>Openness:</strong> Curiosity, creativity, willingness to try new things</li>
+            <li><strong>Conscientiousness:</strong> Organization, discipline, responsibility</li>
+            <li><strong>Extraversion:</strong> Sociability, energy, social dominance</li>
+            <li><strong>Agreeableness:</strong> Compassion, cooperation, trust</li>
+            <li><strong>Neuroticism (Emotional Stability):</strong> Anxiety, sensitivity, emotional regulation</li>
+          </ul>
+          <p>Each dimension scored 0-100 via Claude-powered conversational assessment. Scores are transparent to users and editable.</p>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Layer 3: Attachment Theory (Relationship Health)</span>
+          <span class="expand-badge">Most Predictive Layer</span>
+        </div>
+        <div class="expand-body">
+          <p><strong>Purpose:</strong> Core relationship health predictor. Enormously predictive of relationship outcomes — more important than any single other variable.</p>
+          <ul>
+            <li><strong>Secure:</strong> Confident, communicative, trusting</li>
+            <li><strong>Anxious:</strong> Seeks reassurance, fears abandonment</li>
+            <li><strong>Avoidant:</strong> Values independence, uncomfortable with intimacy</li>
+            <li><strong>Fearful-Avoidant:</strong> Conflicted approach-avoidance</li>
+          </ul>
+          <p>Circle helps users understand their attachment style without clinical language, framing it as growth potential rather than diagnosis.</p>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Layer 4: Communication & Relationship Style</span>
+          <span class="expand-badge">Daily Life Signals</span>
+        </div>
+        <div class="expand-body">
+          <p><strong>Purpose:</strong> Practical compatibility signals for everyday life together.</p>
+          <ul>
+            <li><strong>Love Languages:</strong> Words, acts, time, touch, gifts</li>
+            <li><strong>Communication style:</strong> Direct/indirect, emotional/rational</li>
+            <li><strong>Conflict style:</strong> Avoidant, confrontational, collaborative</li>
+            <li><strong>Emotional pacing:</strong> Fast/slow emotional escalation preferences</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Layer 5: Dynamic Behavioral Learning (Long-Term Moat)</span>
+          <span class="expand-badge">Compounding Advantage</span>
+        </div>
+        <div class="expand-body">
+          <p><strong>Purpose:</strong> The real moat. Matching improves with every user interaction. Competitors starting from scratch can never catch up.</p>
+          <ul>
+            <li>Longitudinal learning from conversations</li>
+            <li>AI builds vector embeddings of personality from interactions</li>
+            <li>Feedback loops from real-world meeting outcomes</li>
+            <li>Post-intro satisfaction signals refine matching</li>
+            <li>6-month and 1-year relationship success tracking</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 06. CONCIERGE MVP -->
+    <!-- ============================================================ -->
+    <div class="section" id="concierge">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Concierge MVP Model</h2>
+      </div>
+
+      <div class="callout critical">
+        <strong>This is the most important strategic decision in v4.</strong> The first 100-300 introductions are NOT algorithmically automated. They are human-curated.
+      </div>
+
+      <p>This follows the proven startup principle: do things that do not scale first. Airbnb manually photographed listings, Uber manually dispatched rides. Circle manually curates introductions first. The purpose is not efficiency — <strong>the purpose is learning.</strong></p>
+
+      <h3>What Concierge Validates</h3>
+      <ol>
+        <li>Users complete self-knowledge onboarding</li>
+        <li>Users trust enough to share deeply</li>
+        <li>Curated intros feel better than swiping</li>
+        <li>Social proximity increases trust</li>
+        <li>Users prefer intentional matching over infinite choice</li>
+        <li>Users return because they feel understood</li>
+        <li>Emotional pacing feels healthy</li>
+        <li>Real-world meetings actually happen</li>
+      </ol>
+
+      <h3>Curator Workflow</h3>
+      <div class="flow">
+        <div class="flow-step">User Onboarding<br><small>15-20 min assessment</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Profile Review<br><small>Curator daily review</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Match Proposal<br><small>2-3 per user</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Mutual Opt-in<br><small>Both accept</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Intro Facilitated<br><small>Message or event</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Feedback<br><small>48h post-intro</small></div>
+      </div>
+
+      <h3>Concierge Timeline</h3>
+      <table>
+        <thead>
+          <tr><th>Phase</th><th>Timeline</th><th>Users</th><th>Curation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Phase 1a</td><td>Weeks 1-4</td><td>50</td><td>100% manual</td></tr>
+          <tr><td>Phase 1b</td><td>Weeks 5-8</td><td>100-150</td><td>100% manual</td></tr>
+          <tr><td>Phase 2</td><td>Weeks 9-14</td><td>250-300</td><td>Semi-automated, human validated</td></tr>
+          <tr><td>Phase 3</td><td>Weeks 15-20</td><td>500+</td><td>80/20 algorithmic/manual</td></tr>
+          <tr><td>Phase 4+</td><td>Beyond W20</td><td>1000+</td><td>Full algorithmic, human escalations</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Curator Time Investment</h3>
+      <ul>
+        <li><strong>30-50 users:</strong> ~2-3 hours/day</li>
+        <li><strong>100-150 users:</strong> ~5-7 hours/day</li>
+        <li><strong>150+ users:</strong> Scale to 2 curators or semi-automate</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 07. UX FLOWS -->
+    <!-- ============================================================ -->
+    <div class="section" id="ux">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2>UX Flows & Screens</h2>
+      </div>
+
+      <p>Complete screen-by-screen user journeys across all core product areas.</p>
+
+      <h3>Flow 1: Onboarding ("The Mirror")</h3>
+      <div class="flow">
+        <div class="flow-step">Welcome</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Identity<br>Verification</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Assessment<br>(20 questions)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Mid-Reflection</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Mirror Result</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Intent Selection</div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Welcome Screen Spec</span>
+        </div>
+        <div class="expand-body">
+          <p><strong>Headline (48px, 800):</strong> "Discover Your True Reflection"</p>
+          <p><strong>Subheading (16px, 400):</strong> "Welcome to Circle. Let's explore who you are — at your own pace, with complete trust."</p>
+          <p><strong>Visual:</strong> Animated concentric circles in center (pulse, 2s loop)</p>
+          <p><strong>CTA:</strong> "Let's Begin" (56px height, Emerald background)</p>
+          <p><strong>Secondary:</strong> "Learn More" (text link)</p>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Assessment Screens (20 questions)</span>
+        </div>
+        <div class="expand-body">
+          <p>Each question has: progress bar, heading, context text, 4 multiple-choice options. Background animation shows personality rings growing as user answers.</p>
+          <p>Questions map to Big Five dimensions. First 4 questions target Openness, questions 5-8 target Extraversion, etc. Each answer adds color intensity to the corresponding ring in the background visualization.</p>
+          <p><strong>Mid-assessment (Q10):</strong> Pause screen showing 2-3 colors emerging. "We're building your picture... Based on what you've shared, we're noticing you're quite open to new ideas."</p>
+          <p><strong>Completion (Q20):</strong> Full Mirror reveal — all 5 Big Five rings visible with scores, MBTI type in center, narrative interpretation below.</p>
+        </div>
+      </div>
+
+      <h3>Flow 2: Home / Dashboard</h3>
+      <div class="tbd">Screen designs pending — Phase 1 engineering</div>
+      <div class="card">
+        <h4>Planned Sections:</h4>
+        <ul>
+          <li><strong>Your Mirror:</strong> Concentric circle visualization (always visible, evolves over time)</li>
+          <li><strong>Pending Intros:</strong> Active match proposals waiting for response</li>
+          <li><strong>Active Conversations:</strong> Open intro threads</li>
+          <li><strong>Personality Insights:</strong> Weekly micro-insights from Claude ("You tend to...")</li>
+          <li><strong>Trust Score:</strong> Transparent trust level with improvement suggestions</li>
+        </ul>
+      </div>
+
+      <h3>Flow 3: Receiving an Introduction</h3>
+      <div class="flow">
+        <div class="flow-step">Push Notification<br><small>"You have a new intro"</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Intro Card<br><small>Name, photo, summary</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Compatibility View<br><small>Why you'd connect</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Accept / Pass</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Message Opens<br><small>If mutual</small></div>
+      </div>
+
+      <h3>Flow 4: Messaging</h3>
+      <div class="tbd">Detailed wireframes pending — Phase 1 design sprint</div>
+      <div class="card">
+        <h4>Key Decisions:</h4>
+        <ul>
+          <li><strong>Conversation starters:</strong> AI-generated prompts based on shared traits ("You both love hiking. Ask about...")</li>
+          <li><strong>Message pacing:</strong> Gentle nudges after 48h of silence, not aggressive notifications</li>
+          <li><strong>Transition to real-world:</strong> Venue suggestions, calendar integration for scheduling</li>
+          <li><strong>Safety:</strong> Report button on every message, moderation flags for concerning patterns</li>
+        </ul>
+      </div>
+
+      <h3>Flow 5: Settings & Profile Management</h3>
+      <div class="tbd">Detailed wireframes pending</div>
+      <div class="card">
+        <ul>
+          <li><strong>Insights Dashboard:</strong> Full AI assessment breakdown, edit/reject controls</li>
+          <li><strong>Privacy Controls:</strong> Data export, deletion request, consent management</li>
+          <li><strong>Intent Mode:</strong> Toggle between dating, friendship, community, self-discovery</li>
+          <li><strong>Notification Preferences:</strong> Granular control over push, email, in-app</li>
+          <li><strong>Account:</strong> Pause, deactivate, or permanently delete</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 08. DESIGN SYSTEM -->
+    <!-- ============================================================ -->
+    <div class="section" id="design">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <h2>Design System</h2>
+      </div>
+
+      <p>Design direction: <strong>"The Mirror"</strong> — self-discovery through visual emergence. As users answer questions, personality appears visually, like a portrait being drawn. Concentric circle logo becomes literal personality visualization.</p>
+
+      <h3>Color System</h3>
+      <h4>Brand Colors</h4>
+      <div class="swatches">
+        <div class="swatch"><div class="swatch-color" style="background:#1A1A1A"></div><div><div class="swatch-label">Circle Black</div><div class="swatch-hex">#1A1A1A</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#FFFFFF; border:1px solid #333"></div><div><div class="swatch-label">Circle White</div><div class="swatch-hex">#FFFFFF</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#2D6A4F"></div><div><div class="swatch-label">Emerald</div><div class="swatch-hex">#2D6A4F</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#D4B5A0"></div><div><div class="swatch-label">Warm Neutral</div><div class="swatch-hex">#D4B5A0</div></div></div>
+      </div>
+
+      <h4>Big Five Trait Colors</h4>
+      <div class="swatches">
+        <div class="swatch"><div class="swatch-color" style="background:#6B9AC4"></div><div><div class="swatch-label">Openness — Sky Blue</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#7BA489"></div><div><div class="swatch-label">Conscientiousness — Sage</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#E8956F"></div><div><div class="swatch-label">Extraversion — Coral</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#D4A5A5"></div><div><div class="swatch-label">Agreeableness — Rose</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#5B4B8A"></div><div><div class="swatch-label">Emotional Stability — Indigo</div></div></div>
+      </div>
+
+      <h3>Typography</h3>
+      <table>
+        <thead><tr><th>Role</th><th>Font</th><th>Weight</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td>Headlines</td><td>Helvetica Neue</td><td>700-800</td><td>Bold, editorial — page titles, hero text</td></tr>
+          <tr><td>Body</td><td>Avenir</td><td>400-600</td><td>Warm, readable — all body copy</td></tr>
+          <tr><td>Accent</td><td>Georgia (serif)</td><td>400</td><td>Optional — motivational quotes, personality narratives</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Spacing & Grid</h3>
+      <p><strong>8px grid system.</strong> All spacing values are multiples of 8. Card padding: 20px. Screen margins: 16px (mobile). Component gaps: 8px, 16px, 24px, 32px.</p>
+
+      <h3>Motion</h3>
+      <table>
+        <thead><tr><th>Animation</th><th>Duration</th><th>Easing</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td>Page fade-in</td><td>300ms</td><td>ease-in-out</td><td>Screen transitions</td></tr>
+          <tr><td>Personality emergence</td><td>800ms</td><td>ease-out</td><td>Big Five colors appearing in rings</td></tr>
+          <tr><td>Interaction feedback</td><td>150ms</td><td>ease</td><td>Button press, selection highlight</td></tr>
+          <tr><td>Ring pulse</td><td>2000ms</td><td>ease-in-out</td><td>Welcome screen animation loop</td></tr>
+        </tbody>
+      </table>
+      <p>All animations respect <code>prefers-reduced-motion</code>.</p>
+
+      <h3>Core Components</h3>
+      <ul>
+        <li><strong>Primary Button:</strong> 56px height, Emerald background, white text, 8px radius</li>
+        <li><strong>Input Fields:</strong> Text, slider (Big Five scores), multiple choice cards</li>
+        <li><strong>Profile Cards:</strong> Photo, name, MBTI badge, compatibility summary</li>
+        <li><strong>Progress Indicator:</strong> Linear bar + step count text</li>
+        <li><strong>The Mirror:</strong> Concentric circle SVG with dynamic ring widths and colors</li>
+        <li><strong>Trust Score Badge:</strong> Shield icon + numeric score + verification level</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 09. TECHNICAL ARCHITECTURE -->
+    <!-- ============================================================ -->
+    <div class="section" id="arch">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <h2>Technical Architecture</h2>
+      </div>
+
+      <h3>System Overview</h3>
+      <div class="schema">
+<span class="comment">┌─────────────────────────────────────────────────────────────────┐</span>
+<span class="comment">│                        CLIENT LAYER                             │</span>
+<span class="comment">│  Next.js 15 (App Router) + TypeScript + Tailwind + shadcn/ui    │</span>
+<span class="comment">│  Deployed → Cloudflare Pages                                   │</span>
+<span class="comment">└──────────────────────────┬──────────────────────────────────────┘</span>
+                           │ <span class="str">HTTPS / REST + WebSocket</span>
+<span class="comment">┌──────────────────────────┴──────────────────────────────────────┐</span>
+<span class="comment">│                        API LAYER                                │</span>
+<span class="comment">│  Cloudflare Workers (TypeScript)                                │</span>
+<span class="comment">│  Auth │ Assessment │ Matching │ Messaging │ Admin │ Webhooks     │</span>
+<span class="comment">└───┬──────────┬──────────┬──────────┬──────────┬─────────────────┘</span>
+    │          │          │          │          │
+<span class="comment">┌───┴──┐  ┌────┴───┐  ┌──┴───┐  ┌──┴───┐  ┌──┴─────┐</span>
+<span class="comment">│Supa  │  │Claude  │  │pgvec │  │Stripe│  │Persona │</span>
+<span class="comment">│base  │  │  API   │  │ tor  │  │      │  │Identity│</span>
+<span class="comment">│PgSQL │  │        │  │      │  │      │  │        │</span>
+<span class="comment">└──────┘  └────────┘  └──────┘  └──────┘  └────────┘</span>
+      </div>
+
+      <h3>Tech Stack</h3>
+      <table>
+        <thead><tr><th>Layer</th><th>Technology</th><th>Rationale</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Frontend</strong></td><td>Next.js 15 (App Router), TypeScript, Tailwind CSS, shadcn/ui</td><td>SSG for performance, component library for speed, Cloudflare Pages deploy</td></tr>
+          <tr><td><strong>API</strong></td><td>Cloudflare Workers (TypeScript)</td><td>Edge-native, zero cold starts, free tier (100K req/day), global distribution</td></tr>
+          <tr><td><strong>Database</strong></td><td>PostgreSQL via Supabase + pgvector</td><td>Row-level security, real-time subscriptions, built-in auth, vector similarity search</td></tr>
+          <tr><td><strong>AI/ML</strong></td><td>Claude API (assessment), Embeddings API (vectors)</td><td>Best conversational AI for personality interviews, strong safety alignment</td></tr>
+          <tr><td><strong>Payments</strong></td><td>Stripe</td><td>Industry standard, subscription management, webhook-driven</td></tr>
+          <tr><td><strong>Identity</strong></td><td>Persona or Stripe Identity</td><td>24h verification, document + selfie check, compliance-ready</td></tr>
+          <tr><td><strong>Storage</strong></td><td>Cloudflare R2</td><td>S3-compatible, zero egress fees, encrypted at rest</td></tr>
+          <tr><td><strong>Cache</strong></td><td>Cloudflare KV / Redis (Upstash)</td><td>Session cache, assessment result caching, rate limit counters</td></tr>
+          <tr><td><strong>Analytics</strong></td><td>Mixpanel</td><td>Event tracking, funnel analysis, cohort reporting</td></tr>
+          <tr><td><strong>Monitoring</strong></td><td>Sentry (errors), Cloudflare Analytics (traffic)</td><td>Error tracking, performance monitoring</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Authentication Flow</h3>
+      <div class="flow">
+        <div class="flow-step">Email / Phone</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Magic Link<br><small>via Supabase Auth</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">JWT Session</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">RLS Policies<br><small>Row-level security</small></div>
+      </div>
+      <p>No passwords. Magic link or OAuth (Google/Apple) only. JWT tokens stored in httpOnly cookies. Supabase Row-Level Security (RLS) enforces data isolation — users can only access their own data.</p>
+
+      <h3>Platform Strategy</h3>
+      <div class="card">
+        <h4>Phase 1-2: Web-First (PWA)</h4>
+        <p>Progressive Web App with mobile-optimized responsive design. Installable on home screen. Push notifications via Web Push API. This avoids app store review cycles during rapid iteration.</p>
+        <h4>Phase 3+: Native Mobile</h4>
+        <div class="tbd">React Native or Swift/Kotlin decision deferred to Phase 2 learnings</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 10. DATABASE SCHEMA -->
+    <!-- ============================================================ -->
+    <div class="section" id="db">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <h2>Database Schema</h2>
+      </div>
+
+      <p>Core schema for Supabase PostgreSQL with pgvector extension. All personality/psychology fields encrypted at rest via column-level encryption.</p>
+
+      <div class="schema">
+<span class="comment">-- Core user table</span>
+<span class="kw">CREATE TABLE</span> <span class="table-name">users</span> (
+  id            <span class="type">UUID</span> <span class="kw">PRIMARY KEY DEFAULT</span> gen_random_uuid(),
+  email         <span class="type">TEXT</span> <span class="kw">UNIQUE NOT NULL</span>,
+  phone         <span class="type">TEXT</span>,
+  display_name  <span class="type">TEXT NOT NULL</span>,
+  avatar_url    <span class="type">TEXT</span>,
+  identity_verified  <span class="type">BOOLEAN DEFAULT FALSE</span>,
+  trust_score   <span class="type">INTEGER DEFAULT</span> 0,
+  intent_mode   <span class="type">TEXT DEFAULT</span> <span class="str">'dating'</span>,  <span class="comment">-- dating | friendship | community | self-discovery</span>
+  status        <span class="type">TEXT DEFAULT</span> <span class="str">'onboarding'</span>, <span class="comment">-- onboarding | active | paused | deactivated</span>
+  created_at    <span class="type">TIMESTAMPTZ DEFAULT</span> now(),
+  updated_at    <span class="type">TIMESTAMPTZ DEFAULT</span> now()
+);
+      </div>
+
+      <div class="schema">
+<span class="comment">-- Personality assessment results (ENCRYPTED)</span>
+<span class="kw">CREATE TABLE</span> <span class="table-name">assessments</span> (
+  id            <span class="type">UUID</span> <span class="kw">PRIMARY KEY DEFAULT</span> gen_random_uuid(),
+  user_id       <span class="type">UUID REFERENCES</span> users(id) <span class="kw">ON DELETE CASCADE</span>,
+  version       <span class="type">INTEGER DEFAULT</span> 1,
+  mbti_type     <span class="type">TEXT</span>,           <span class="comment">-- e.g. 'ENFJ'</span>
+  big_five      <span class="type">JSONB</span>,          <span class="comment">-- {openness: 78, conscientiousness: 65, ...}</span>
+  attachment    <span class="type">TEXT</span>,           <span class="comment">-- secure | anxious | avoidant | fearful</span>
+  comm_style    <span class="type">JSONB</span>,          <span class="comment">-- {love_lang: 'quality_time', conflict: 'collaborative', ...}</span>
+  raw_responses <span class="type">JSONB</span>,          <span class="comment">-- encrypted: full Q&A from Claude interview</span>
+  claude_analysis <span class="type">TEXT</span>,        <span class="comment">-- encrypted: Claude's narrative interpretation</span>
+  user_overrides <span class="type">JSONB</span>,         <span class="comment">-- any user corrections to AI conclusions</span>
+  created_at    <span class="type">TIMESTAMPTZ DEFAULT</span> now(),
+  <span class="kw">CONSTRAINT</span> uq_user_version <span class="kw">UNIQUE</span>(user_id, version)
+);
+      </div>
+
+      <div class="schema">
+<span class="comment">-- Personality embedding vectors for similarity matching</span>
+<span class="kw">CREATE TABLE</span> <span class="table-name">embeddings</span> (
+  id            <span class="type">UUID</span> <span class="kw">PRIMARY KEY DEFAULT</span> gen_random_uuid(),
+  user_id       <span class="type">UUID REFERENCES</span> users(id) <span class="kw">ON DELETE CASCADE UNIQUE</span>,
+  vector        <span class="type">VECTOR(1536)</span>,   <span class="comment">-- personality embedding from Claude analysis</span>
+  model_version <span class="type">TEXT</span>,           <span class="comment">-- embedding model version for migration</span>
+  updated_at    <span class="type">TIMESTAMPTZ DEFAULT</span> now()
+);
+<span class="kw">CREATE INDEX</span> idx_embeddings_vector <span class="kw">ON</span> embeddings <span class="kw">USING</span> ivfflat (vector vector_cosine_ops);
+      </div>
+
+      <div class="schema">
+<span class="comment">-- Match proposals (curator or algorithm generated)</span>
+<span class="kw">CREATE TABLE</span> <span class="table-name">matches</span> (
+  id            <span class="type">UUID</span> <span class="kw">PRIMARY KEY DEFAULT</span> gen_random_uuid(),
+  user_a        <span class="type">UUID REFERENCES</span> users(id),
+  user_b        <span class="type">UUID REFERENCES</span> users(id),
+  similarity    <span class="type">FLOAT</span>,          <span class="comment">-- cosine similarity score</span>
+  curator_id    <span class="type">UUID</span>,           <span class="comment">-- NULL if algorithmic</span>
+  reasoning     <span class="type">TEXT</span>,           <span class="comment">-- why they were matched (shown to users)</span>
+  status        <span class="type">TEXT DEFAULT</span> <span class="str">'proposed'</span>, <span class="comment">-- proposed | a_accepted | b_accepted | mutual | declined | expired</span>
+  quality_score <span class="type">FLOAT</span>,          <span class="comment">-- post-intro feedback score</span>
+  created_at    <span class="type">TIMESTAMPTZ DEFAULT</span> now()
+);
+      </div>
+
+      <div class="schema">
+<span class="comment">-- Conversations between matched users</span>
+<span class="kw">CREATE TABLE</span> <span class="table-name">conversations</span> (
+  id            <span class="type">UUID</span> <span class="kw">PRIMARY KEY DEFAULT</span> gen_random_uuid(),
+  match_id      <span class="type">UUID REFERENCES</span> matches(id),
+  created_at    <span class="type">TIMESTAMPTZ DEFAULT</span> now()
+);
+
+<span class="kw">CREATE TABLE</span> <span class="table-name">messages</span> (
+  id            <span class="type">UUID</span> <span class="kw">PRIMARY KEY DEFAULT</span> gen_random_uuid(),
+  conversation_id <span class="type">UUID REFERENCES</span> conversations(id),
+  sender_id     <span class="type">UUID REFERENCES</span> users(id),
+  content       <span class="type">TEXT</span>,           <span class="comment">-- encrypted at rest</span>
+  created_at    <span class="type">TIMESTAMPTZ DEFAULT</span> now()
+);
+      </div>
+
+      <div class="schema">
+<span class="comment">-- Post-intro feedback loop</span>
+<span class="kw">CREATE TABLE</span> <span class="table-name">feedback</span> (
+  id            <span class="type">UUID</span> <span class="kw">PRIMARY KEY DEFAULT</span> gen_random_uuid(),
+  match_id      <span class="type">UUID REFERENCES</span> matches(id),
+  user_id       <span class="type">UUID REFERENCES</span> users(id),
+  connected     <span class="type">BOOLEAN</span>,        <span class="comment">-- did they connect?</span>
+  met_irl       <span class="type">BOOLEAN</span>,        <span class="comment">-- did they meet in person?</span>
+  quality       <span class="type">INTEGER CHECK</span>(quality BETWEEN 1 AND 5),
+  notes         <span class="type">TEXT</span>,
+  created_at    <span class="type">TIMESTAMPTZ DEFAULT</span> now()
+);
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Additional Tables (moderation, audit, billing)</span>
+        </div>
+        <div class="expand-body">
+          <div class="schema">
+<span class="comment">-- Safety & moderation</span>
+<span class="kw">CREATE TABLE</span> <span class="table-name">reports</span> (
+  id UUID PRIMARY KEY, reporter_id UUID, reported_id UUID,
+  reason TEXT, description TEXT, status TEXT DEFAULT 'pending',
+  resolved_by UUID, resolved_at TIMESTAMPTZ, created_at TIMESTAMPTZ DEFAULT now()
+);
+
+<span class="comment">-- Audit log for data access (GDPR compliance)</span>
+<span class="kw">CREATE TABLE</span> <span class="table-name">audit_log</span> (
+  id UUID PRIMARY KEY, actor_id UUID, action TEXT,
+  resource_type TEXT, resource_id UUID,
+  metadata JSONB, created_at TIMESTAMPTZ DEFAULT now()
+);
+
+<span class="comment">-- Subscriptions & billing</span>
+<span class="kw">CREATE TABLE</span> <span class="table-name">subscriptions</span> (
+  id UUID PRIMARY KEY, user_id UUID REFERENCES users(id),
+  stripe_subscription_id TEXT UNIQUE, stripe_customer_id TEXT,
+  plan TEXT, status TEXT, current_period_end TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+<span class="comment">-- Fairness audit results</span>
+<span class="kw">CREATE TABLE</span> <span class="table-name">fairness_audits</span> (
+  id UUID PRIMARY KEY, audit_date DATE,
+  metrics JSONB, findings TEXT, action_taken TEXT,
+  auditor TEXT, created_at TIMESTAMPTZ DEFAULT now()
+);
           </div>
-        `).join('');
-        
-        searchResults.style.display = 'block';
-      });
+        </div>
+      </div>
+    </div>
 
-      document.addEventListener('click', (e) => {
-        if (e.target !== searchInput && !searchResults.contains(e.target)) {
-          searchResults.style.display = 'none';
-        }
-      });
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 11. API SPECIFICATION -->
+    <!-- ============================================================ -->
+    <div class="section" id="api">
+      <div class="section-header">
+        <span class="section-num">11</span>
+        <h2>API Specification</h2>
+      </div>
+
+      <p>RESTful API served via Cloudflare Workers. All endpoints require JWT authentication unless noted. Base URL: <code>https://api.circle.dating/v1</code></p>
+
+      <h3>Auth Endpoints</h3>
+      <table>
+        <thead><tr><th>Method</th><th>Path</th><th>Description</th><th>Auth</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/auth/magic-link</code></td><td>Send magic link to email</td><td>None</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/auth/verify</code></td><td>Verify magic link token</td><td>None</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/auth/oauth/{provider}</code></td><td>OAuth flow (Google, Apple)</td><td>None</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/auth/refresh</code></td><td>Refresh JWT token</td><td>Refresh token</td></tr>
+          <tr><td><span class="tag tag-red">DELETE</span></td><td><code>/auth/session</code></td><td>Logout / invalidate session</td><td>JWT</td></tr>
+        </tbody>
+      </table>
+
+      <h3>User Endpoints</h3>
+      <table>
+        <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-blue">GET</span></td><td><code>/users/me</code></td><td>Get current user profile</td></tr>
+          <tr><td><span class="tag tag-amber">PATCH</span></td><td><code>/users/me</code></td><td>Update profile fields</td></tr>
+          <tr><td><span class="tag tag-blue">GET</span></td><td><code>/users/me/insights</code></td><td>Get personality insights dashboard data</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/users/me/export</code></td><td>Request data export (GDPR)</td></tr>
+          <tr><td><span class="tag tag-red">DELETE</span></td><td><code>/users/me</code></td><td>Request account deletion (30-day grace)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Assessment Endpoints</h3>
+      <table>
+        <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/assessment/start</code></td><td>Begin personality assessment session</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/assessment/respond</code></td><td>Submit answer to current question</td></tr>
+          <tr><td><span class="tag tag-blue">GET</span></td><td><code>/assessment/results</code></td><td>Get completed assessment results</td></tr>
+          <tr><td><span class="tag tag-amber">PATCH</span></td><td><code>/assessment/override</code></td><td>User overrides an AI conclusion</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/assessment/request-review</code></td><td>Request human curator review</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Matching Endpoints</h3>
+      <table>
+        <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-blue">GET</span></td><td><code>/matches/pending</code></td><td>Get pending intro proposals</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/matches/{id}/accept</code></td><td>Accept an intro proposal</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/matches/{id}/decline</code></td><td>Decline an intro proposal</td></tr>
+          <tr><td><span class="tag tag-blue">GET</span></td><td><code>/matches/{id}/compatibility</code></td><td>Get compatibility breakdown for a match</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/matches/{id}/feedback</code></td><td>Submit post-intro feedback</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Messaging Endpoints</h3>
+      <table>
+        <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-blue">GET</span></td><td><code>/conversations</code></td><td>List active conversations</td></tr>
+          <tr><td><span class="tag tag-blue">GET</span></td><td><code>/conversations/{id}/messages</code></td><td>Get messages in a conversation</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/conversations/{id}/messages</code></td><td>Send a message</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/conversations/{id}/report</code></td><td>Report a conversation for moderation</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Admin / Curator Endpoints</h3>
+      <table>
+        <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-blue">GET</span></td><td><code>/admin/users</code></td><td>List users (with filters)</td></tr>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/admin/matches/propose</code></td><td>Curator proposes a match</td></tr>
+          <tr><td><span class="tag tag-blue">GET</span></td><td><code>/admin/reports</code></td><td>View moderation reports queue</td></tr>
+          <tr><td><span class="tag tag-amber">PATCH</span></td><td><code>/admin/reports/{id}</code></td><td>Resolve a moderation report</td></tr>
+          <tr><td><span class="tag tag-blue">GET</span></td><td><code>/admin/metrics</code></td><td>Dashboard metrics & KPIs</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Rate Limiting</h3>
+      <table>
+        <thead><tr><th>Endpoint Group</th><th>Phase 1</th><th>Phase 2+</th></tr></thead>
+        <tbody>
+          <tr><td>Auth</td><td>10 req/min</td><td>10 req/min</td></tr>
+          <tr><td>Assessment</td><td>30 req/min</td><td>60 req/min</td></tr>
+          <tr><td>User</td><td>100 req/min</td><td>500 req/min</td></tr>
+          <tr><td>Messaging</td><td>60 req/min</td><td>120 req/min</td></tr>
+          <tr><td>Admin</td><td>200 req/min</td><td>500 req/min</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 12. AI/LLM PIPELINE -->
+    <!-- ============================================================ -->
+    <div class="section" id="ai">
+      <div class="section-header">
+        <span class="section-num">12</span>
+        <h2>AI/LLM Integration Pipeline</h2>
+      </div>
+
+      <p>AI in Circle is the operational backbone of personality assessment and longitudinal learning. It is not a novelty — it is infrastructure.</p>
+
+      <h3>Assessment Pipeline</h3>
+      <div class="flow">
+        <div class="flow-step">User Answers<br><small>20 questions</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Claude Analysis<br><small>Structured output</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Profile JSON<br><small>MBTI + Big5 + Attach</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Embedding<br><small>1536-dim vector</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">pgvector Store</div>
+      </div>
+
+      <h3>AI Transparency & User Control</h3>
+      <div class="card">
+        <ul>
+          <li><strong>Insights Dashboard:</strong> Users see all conclusions Claude made — Big Five scores, MBTI, attachment, communication patterns</li>
+          <li><strong>Edit/Reject:</strong> Users can click "Edit" to provide feedback or "Reject" to remove any AI conclusion</li>
+          <li><strong>Request Human Review:</strong> If user disagrees, curator reassesses within 48 hours</li>
+          <li><strong>No Black Box:</strong> Users always see the reasoning behind AI conclusions</li>
+          <li><strong>Language:</strong> Straightforward, relatable language — never clinical or jargon-heavy</li>
+        </ul>
+      </div>
+
+      <h3>Matching Algorithm</h3>
+      <div class="schema">
+<span class="comment">// Matching score formula</span>
+score = (
+  base_similarity * 0.4          <span class="comment">// cosine similarity of personality embeddings</span>
+  + attachment_compatibility * 0.25  <span class="comment">// secure-secure best; anxious-avoidant worst</span>
+  + comm_style_match * 0.15      <span class="comment">// love language + conflict style alignment</span>
+  + social_proximity * 0.10      <span class="comment">// mutual connections, community overlap</span>
+  + feedback_adjustment * 0.10   <span class="comment">// learned from past intro outcomes</span>
+)
+
+<span class="comment">// Minimum threshold for proposal</span>
+<span class="kw">if</span> score >= 0.65 → <span class="str">eligible for curator review</span>
+<span class="kw">if</span> score >= 0.80 → <span class="str">strong match candidate</span>
+      </div>
+
+      <h3>Cost Model</h3>
+      <table>
+        <thead><tr><th>Operation</th><th>Cost/User</th><th>Frequency</th></tr></thead>
+        <tbody>
+          <tr><td>Initial assessment (Claude API)</td><td>~$0.30</td><td>Once</td></tr>
+          <tr><td>Monthly feedback processing</td><td>~$0.05</td><td>Monthly</td></tr>
+          <tr><td>Match suggestion generation</td><td>~$0.02</td><td>Per match</td></tr>
+          <tr><td><strong>Total per user</strong></td><td><strong>~$0.40-0.50/month</strong></td><td></td></tr>
+        </tbody>
+      </table>
+      <p><strong>Revenue target:</strong> $20/month subscription = 40x margin on AI cost.</p>
+
+      <h3>Bias Mitigation</h3>
+      <ul>
+        <li>Monthly automated fairness audits — match acceptance rates across demographics</li>
+        <li>Alert if any group has >20% acceptance rate disparity</li>
+        <li>Quarterly external auditor spot-checks</li>
+        <li>Fairness check required in CI/CD before any prompt changes deploy</li>
+        <li>Demographic parity monitoring dashboard</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 13. INFRASTRUCTURE & DEVOPS -->
+    <!-- ============================================================ -->
+    <div class="section" id="infra">
+      <div class="section-header">
+        <span class="section-num">13</span>
+        <h2>Infrastructure & DevOps</h2>
+      </div>
+
+      <h3>Deployment Pipeline</h3>
+      <div class="flow">
+        <div class="flow-step">Git Push</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">GitHub Actions<br><small>CI/CD</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Lint + Type Check<br><small>ESLint + tsc</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Tests<br><small>Vitest</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Build<br><small>Next.js + Workers</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Deploy<br><small>CF Pages + Workers</small></div>
+      </div>
+
+      <h3>Environment Strategy</h3>
+      <table>
+        <thead><tr><th>Environment</th><th>Purpose</th><th>URL Pattern</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Development</strong></td><td>Local development</td><td><code>localhost:3000</code></td></tr>
+          <tr><td><strong>Staging</strong></td><td>Pre-production testing</td><td><code>staging.circle.dating</code></td></tr>
+          <tr><td><strong>Production</strong></td><td>Live users</td><td><code>circle.dating</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Scaling by Phase</h3>
+      <table>
+        <thead><tr><th>Phase</th><th>Users</th><th>Infra</th><th>Monthly Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Phase 1a (W5-8)</td><td>100</td><td>Single Supabase, CF Pages, basic API</td><td>$1,200</td></tr>
+          <tr><td>Phase 1b (W9-12)</td><td>250-300</td><td>+ Redis cache, curator dashboard, rate limiting</td><td>$2,800</td></tr>
+          <tr><td>Phase 2 (W13-16)</td><td>500-750</td><td>+ Read replicas, analytics, CI/CD pipeline</td><td>$5,500</td></tr>
+          <tr><td>Phase 3 (W17-20)</td><td>1,500-2,000</td><td>+ Multi-region, WebSockets, WAF, DR</td><td>$12-15K</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Monitoring & Observability</h3>
+      <div class="card">
+        <ul>
+          <li><strong>Error tracking:</strong> Sentry — real-time error reporting with source maps</li>
+          <li><strong>Uptime monitoring:</strong> Cloudflare Health Checks + Better Uptime</li>
+          <li><strong>Performance:</strong> Cloudflare Analytics (free), Core Web Vitals tracking</li>
+          <li><strong>Logging:</strong> Structured JSON logs via Workers, queryable in Cloudflare Logs</li>
+          <li><strong>Alerting:</strong> PagerDuty or Opsgenie for critical incidents (P1: 15min response)</li>
+        </ul>
+      </div>
+
+      <h3>Security Hardening</h3>
+      <ul>
+        <li><strong>WAF:</strong> Cloudflare WAF with managed rulesets (OWASP Top 10)</li>
+        <li><strong>DDoS:</strong> Cloudflare built-in DDoS protection (always-on)</li>
+        <li><strong>Secrets:</strong> Environment variables in Cloudflare Workers secrets, never in code</li>
+        <li><strong>Headers:</strong> HSTS, X-Frame-Options, CSP, X-Content-Type-Options</li>
+        <li><strong>API key rotation:</strong> Quarterly rotation of all service credentials</li>
+        <li><strong>Penetration testing:</strong> Annual external pentest (Phase 2+)</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 14. PRIVACY ARCHITECTURE -->
+    <!-- ============================================================ -->
+    <div class="section" id="privacy">
+      <div class="section-header">
+        <span class="section-num">14</span>
+        <h2>Privacy Architecture</h2>
+      </div>
+
+      <div class="callout critical">
+        <strong>Circle handles extremely sensitive data:</strong> psychological traits, identity verification, social graph relationships, romantic intent, conversations, and emotional patterns. Privacy is foundational, not optional.
+      </div>
+
+      <h3>Mandatory Privacy Principles</h3>
+      <div class="card-grid">
+        <div class="card"><h4>Data Minimization</h4><p>Collect only necessary data. No passive behavioral tracking beyond what's needed for matching.</p></div>
+        <div class="card"><h4>Separate Sensitive Stores</h4><p>Identity verification data NEVER lives beside personality profile data. Separate systems, separate access boundaries.</p></div>
+        <div class="card"><h4>Explicit Consent</h4><p>Users understand what is stored, processed, visible, and what affects matching. Two consent checkpoints during onboarding.</p></div>
+        <div class="card"><h4>No Silent AI Training</h4><p>User data is NOT used to train models by default. Ever. Opt-in only for research participation.</p></div>
+        <div class="card"><h4>Full Deletion Rights</h4><p>Export profile (JSON/CSV), delete all data, revoke consent, disconnect cleanly. 7-day grace period, 30-day complete removal.</p></div>
+        <div class="card"><h4>Encrypted Everything</h4><p>AES-256 at rest, TLS 1.3 in transit. Column-level encryption for psychology fields. Key rotation quarterly via AWS KMS.</p></div>
+      </div>
+
+      <h3>Data Access Control</h3>
+      <table>
+        <thead><tr><th>Data Type</th><th>Who Can Access</th><th>Purpose</th><th>Audit</th></tr></thead>
+        <tbody>
+          <tr><td>Personality assessments</td><td>Curator</td><td>Matching + intro decisions</td><td>Logged</td></tr>
+          <tr><td>Conversation logs</td><td>Moderator</td><td>Safety review + harassment detection</td><td>Logged</td></tr>
+          <tr><td>User identity data</td><td>Compliance/Legal</td><td>Regulatory requests</td><td>Logged</td></tr>
+          <tr><td>All system access</td><td>Audit system</td><td>Track unauthorized access attempts</td><td>Logged</td></tr>
+        </tbody>
+      </table>
+
+      <h3>GDPR & CCPA Compliance</h3>
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Full compliance details (consent flows, deletion procedures, data portability)</span>
+        </div>
+        <div class="expand-body">
+          <h4>GDPR</h4>
+          <ul>
+            <li><strong>Right to Access:</strong> Users export full profile including AI assessments</li>
+            <li><strong>Right to Deletion:</strong> Full data deletion within 30 days (7-day grace period)</li>
+            <li><strong>Right to Portability:</strong> Export in standardized JSON/CSV format</li>
+            <li><strong>Data Processing Agreement:</strong> Clear Privacy Policy before onboarding</li>
+          </ul>
+          <h4>CCPA</h4>
+          <ul>
+            <li><strong>Consumer Rights:</strong> Know what's collected, delete personal information, opt-out of sale/sharing</li>
+            <li><strong>Non-discrimination:</strong> Users cannot be charged more for opting out</li>
+            <li><strong>Response timeline:</strong> 45 days for consumer requests</li>
+            <li><strong>Annual privacy audit</strong> by external counsel</li>
+          </ul>
+          <h4>Psychology Data Sensitivity</h4>
+          <p>Personality assessments are treated as Protected Health Information (PHI) equivalent. Encrypted database, authorized staff only, audit logs on all access, regular penetration testing, breach notification within 30 days.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 15. SAFETY -->
+    <!-- ============================================================ -->
+    <div class="section" id="safety">
+      <div class="section-header">
+        <span class="section-num">15</span>
+        <h2>Safety & Moderation</h2>
+      </div>
+
+      <p>Safety is Phase 1 infrastructure, NOT Phase 5 polish.</p>
+
+      <h3>Required Systems at Launch</h3>
+      <div class="card-grid">
+        <div class="card"><h4>Identity Verification</h4><p>Persona or Stripe Identity. 24h verification turnaround. Document + selfie check.</p></div>
+        <div class="card"><h4>Photo Verification</h4><p>Veriff or manual moderation. Required for trust. Anti-catfish measure.</p></div>
+        <div class="card"><h4>Moderation</h4><p>Report button on every message. Block system. Escalation queues. Curator dashboard for review.</p></div>
+        <div class="card"><h4>Behavioral Signals</h4><p>Detect harassment patterns, manipulation tactics, spam behavior, coercive interaction patterns.</p></div>
+      </div>
+
+      <h3>Trust Score</h3>
+      <p>Each user gets a transparent trust score based on verification completion, community vouching, moderation history, and time-in-app behavior. Users can view their own score and understand how to improve it.</p>
+
+      <h3>Incident Response Playbooks</h3>
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Data Breach Response Protocol</span>
+          <span class="expand-badge">Critical</span>
+        </div>
+        <div class="expand-body">
+          <ol>
+            <li><strong>Discovery (Immediate):</strong> Isolate affected systems, assemble incident response team, assess scope</li>
+            <li><strong>Internal notification (&lt;2 hours):</strong> CEO, legal counsel, compliance officer</li>
+            <li><strong>Legal assessment (&lt;24 hours):</strong> Determine which regulations apply, prepare notifications</li>
+            <li><strong>User notification (&lt;72 hours):</strong> Email + in-app + SMS with breach details, impact, remediation steps</li>
+            <li><strong>Public statement (&lt;7 days):</strong> If significant, transparent disclosure to media</li>
+            <li><strong>Post-incident review (&lt;30 days):</strong> Root cause analysis, lessons learned, security improvements</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">AI Bias Detection & Response</span>
+        </div>
+        <div class="expand-body">
+          <ol>
+            <li><strong>Monthly automated audit:</strong> Alert if any demographic group has >20% match acceptance disparity</li>
+            <li><strong>Fairness audit (&lt;48h):</strong> External auditor analyzes matching outcomes across age, gender, race, orientation</li>
+            <li><strong>Hotfix vs rollback (&lt;1 week):</strong> Minor bias = prompt fix; significant bias = immediate rollback</li>
+            <li><strong>User communication (&lt;2 weeks):</strong> Transparency report on findings and corrections</li>
+            <li><strong>Prevention:</strong> Bias checks in CI/CD pipeline, fairness sign-off before prompt changes deploy</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 16. MONETIZATION -->
+    <!-- ============================================================ -->
+    <div class="section" id="monetization">
+      <div class="section-header">
+        <span class="section-num">16</span>
+        <h2>Monetization & Pricing</h2>
+      </div>
+
+      <div class="callout">
+        <strong>Philosophy:</strong> No boosts, superlikes, pay-to-win mechanics, or engagement manipulation. Revenue comes from genuine value, not addiction.
+      </div>
+
+      <h3>Pricing Tiers</h3>
+      <table>
+        <thead><tr><th>Tier</th><th>Price</th><th>Features</th><th>Target</th><th>Est. LTV</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Free</strong></td><td>$0</td>
+            <td>2 intros/month, basic personality insights</td>
+            <td>Trial, price-sensitive</td><td>N/A</td>
+          </tr>
+          <tr>
+            <td><strong>Student</strong></td><td>$5/mo</td>
+            <td>5 intros/month, full insights</td>
+            <td>College, early 20s</td><td>$60</td>
+          </tr>
+          <tr>
+            <td><strong>Founding</strong></td><td>$14.99/mo</td>
+            <td>Unlimited intros, priority support, compatibility reports</td>
+            <td>Early adopters</td><td>$240</td>
+          </tr>
+          <tr>
+            <td><strong>Premium</strong></td><td>$19.99/mo</td>
+            <td>Everything + quarterly personality evolution, deep AI analysis</td>
+            <td>Serious seekers, therapists</td><td>$240</td>
+          </tr>
+          <tr>
+            <td><strong>Corporate</strong></td><td>$500/mo</td>
+            <td>Team reports, workshops, 10 seats, API access</td>
+            <td>HR / wellness</td><td>$6,000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Secondary Revenue Streams (Post-MVP)</h3>
+      <ul>
+        <li><strong>Premium Personality Reports ($29):</strong> Downloadable PDF with full breakdown, sharable with therapist/coach</li>
+        <li><strong>B2B/API License ($500-2K/month):</strong> Therapists/coaches license personality engine for client assessments</li>
+        <li><strong>Corporate Wellness ($5K+/month):</strong> Team culture fit matching, internal compatibility reports</li>
+      </ul>
+
+      <h3>Financial Projections (Conservative)</h3>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-value">500</div><div class="stat-label">Users at W20</div></div>
+        <div class="stat-card"><div class="stat-value">300</div><div class="stat-label">Paid Users (60%)</div></div>
+        <div class="stat-card"><div class="stat-value">$3.6K</div><div class="stat-label">Monthly MRR</div></div>
+        <div class="stat-card"><div class="stat-value">$43K</div><div class="stat-label">Annual Run Rate</div></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 17. GO-TO-MARKET -->
+    <!-- ============================================================ -->
+    <div class="section" id="gtm">
+      <div class="section-header">
+        <span class="section-num">17</span>
+        <h2>Go-to-Market Strategy</h2>
+      </div>
+
+      <h3>Launch Community Selection</h3>
+      <p>Circle does NOT launch broad. It launches inside <strong>one trusted, socially dense, high-context community.</strong> Existing trust matters more than raw size. Density matters more than geography.</p>
+
+      <h4>Candidate Communities</h4>
+      <table>
+        <thead><tr><th>Community</th><th>Trust Level</th><th>Density</th><th>Fit</th></tr></thead>
+        <tbody>
+          <tr><td>Boutique gym / CrossFit box</td><td>High</td><td>High</td><td>Excellent — shared values, regular contact</td></tr>
+          <tr><td>University subcommunity</td><td>Medium</td><td>Very High</td><td>Good — but privacy concerns with peers</td></tr>
+          <tr><td>Coworking network</td><td>Medium-High</td><td>Medium</td><td>Good — founder/professional overlap</td></tr>
+          <tr><td>Startup founder network</td><td>High</td><td>Medium</td><td>Excellent — high intent, tight-knit</td></tr>
+          <tr><td>Church / community group</td><td>Very High</td><td>High</td><td>Good — shared values, existing trust</td></tr>
+        </tbody>
+      </table>
+      <div class="tbd">Final community selection: Phase 0, Week 2 decision</div>
+
+      <h3>Growth Playbook</h3>
+      <div class="card">
+        <h4>Phase 0-1: Seed (0-100 users)</h4>
+        <ul>
+          <li>Personal outreach by founder to community leaders</li>
+          <li>Host 2-3 small dinner events (Circle-branded, 8-12 people)</li>
+          <li>Invite-only onboarding — scarcity creates demand</li>
+          <li>Every user personally onboarded by curator</li>
+        </ul>
+        <h4>Phase 1b-2: Grow (100-500 users)</h4>
+        <ul>
+          <li>Referral program: "Invite someone you trust" (not viral loops)</li>
+          <li>Case study content: "How Maya found her partner through Circle"</li>
+          <li>Expand to 2-3 adjacent communities</li>
+          <li>Launch PR story: "The anti-dating app built on self-knowledge"</li>
+        </ul>
+        <h4>Phase 3+: Scale (500-2,000+ users)</h4>
+        <ul>
+          <li>Content marketing: personality insights blog, psychology content</li>
+          <li>Podcast appearances (relationship, self-improvement space)</li>
+          <li>B2B partnerships: therapists, coaches, wellness companies</li>
+          <li>Geographic expansion: city-by-city, density-first</li>
+        </ul>
+      </div>
+
+      <h3>Positioning</h3>
+      <div class="callout info">
+        <strong>One-liner:</strong> "Circle is where self-knowledge meets meaningful connection — the introduction platform for people who are done swiping."
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 18. BUDGET -->
+    <!-- ============================================================ -->
+    <div class="section" id="budget">
+      <div class="section-header">
+        <span class="section-num">18</span>
+        <h2>Budget & Resources</h2>
+      </div>
+
+      <h3>Team Structure</h3>
+      <table>
+        <thead><tr><th>Role</th><th>Who</th><th>Phase 0</th><th>Phase 1-2</th><th>Phase 3</th></tr></thead>
+        <tbody>
+          <tr><td>Founder / Product Lead</td><td>Greg</td><td>1.0 FTE</td><td>1.0 FTE</td><td>1.0 FTE</td></tr>
+          <tr><td>AI Strategic Partner</td><td>Markus</td><td>Always-on</td><td>Always-on</td><td>Always-on</td></tr>
+          <tr><td>Backend Engineer</td><td>TBD (Rafa?)</td><td>0.5 FTE</td><td>1.0 FTE</td><td>1.0 FTE</td></tr>
+          <tr><td>Frontend Engineer</td><td>Contractor</td><td>—</td><td>0.5 FTE</td><td>0.5 FTE</td></tr>
+          <tr><td>Curator / Operations</td><td>Greg (then hire)</td><td>Greg</td><td>Dedicated hire</td><td>Dedicated</td></tr>
+          <tr><td>Safety / Compliance</td><td>Contractor</td><td>0.1 FTE</td><td>0.3 FTE</td><td>0.3 FTE</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Budget Breakdown (20 Weeks)</h3>
+      <table>
+        <thead><tr><th>Category</th><th>Total</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Personnel</td><td>$380,000</td><td>Engineering, curation, founder salary</td></tr>
+          <tr><td>Infrastructure</td><td>$12,000</td><td>Supabase, Cloudflare, CI/CD, monitoring</td></tr>
+          <tr><td>AI/LLM Costs</td><td>$8,000</td><td>Claude API (assessments + testing)</td></tr>
+          <tr><td>Security / Compliance</td><td>$15,000</td><td>Legal review, privacy audit, Persona</td></tr>
+          <tr><td>Contractors</td><td>$25,000</td><td>Frontend dev, QA, psychologist consultant</td></tr>
+          <tr><td>Marketing / Community</td><td>$30,000</td><td>Beta recruitment, events, content</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>$470,000</strong></td><td>San Diego cost base</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Funding Strategy</h3>
+      <div class="card-grid">
+        <div class="card" style="border-left: 3px solid var(--sage);">
+          <h4>Option A: Bootstrap</h4>
+          <p>Greg funds first $100-150K. Markus covers ops/admin. Reach 200+ users, then apply for seed funding.</p>
+        </div>
+        <div class="card" style="border-left: 3px solid var(--emerald-light);">
+          <h4>Option B: Friends & Family (Recommended)</h4>
+          <p>$200-250K round from trusted advisors. 10-15% equity for $200K (post-money $1.3-2M valuation). Pursue Series A with stronger metrics.</p>
+        </div>
+        <div class="card" style="border-left: 3px solid var(--amber);">
+          <h4>Option C: Lean MVP</h4>
+          <p>Core product only, 50 users, defer polish. 12-16 weeks instead of 20. Cost: $200-250K. Prove viability before major investment.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 19. RISK MANAGEMENT -->
+    <!-- ============================================================ -->
+    <div class="section" id="risk">
+      <div class="section-header">
+        <span class="section-num">19</span>
+        <h2>Risk Management</h2>
+      </div>
+
+      <h3>Operational Risks</h3>
+      <table>
+        <thead><tr><th>Risk</th><th>Severity</th><th>Probability</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>Curator scalability bottleneck</td><td><span class="tag tag-red">HIGH</span></td><td><span class="tag tag-amber">MED</span></td><td>Hire 2nd curator at 150 users; build dashboard early</td></tr>
+          <tr><td>User onboarding friction</td><td><span class="tag tag-red">HIGH</span></td><td><span class="tag tag-red">HIGH</span></td><td>Test with 5-10 users before launch; iterate ruthlessly</td></tr>
+          <tr><td>Low match acceptance rate</td><td><span class="tag tag-red">HIGH</span></td><td><span class="tag tag-amber">MED</span></td><td>Validate intro mechanism in Phase 0 interviews</td></tr>
+          <tr><td>Churn after first intro</td><td><span class="tag tag-amber">MED</span></td><td><span class="tag tag-amber">MED</span></td><td>Strong post-intro nurturing sequence</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Technical Risks</h3>
+      <table>
+        <thead><tr><th>Risk</th><th>Severity</th><th>Probability</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>AI assessment unreliability</td><td><span class="tag tag-red">HIGH</span></td><td><span class="tag tag-amber">MED</span></td><td>Human review of all Phase 1 assessments; external psychologist validation</td></tr>
+          <tr><td>Database breach / data loss</td><td><span class="tag tag-red">CRIT</span></td><td><span class="tag tag-green">LOW</span></td><td>Encrypted backups, regular pen testing, incident response plan</td></tr>
+          <tr><td>AI bias in matching</td><td><span class="tag tag-amber">MED</span></td><td><span class="tag tag-amber">MED</span></td><td>Monthly fairness audits, demographic parity monitoring</td></tr>
+          <tr><td>Scalability wall (>500 users)</td><td><span class="tag tag-amber">MED</span></td><td><span class="tag tag-amber">MED</span></td><td>Architect for 10K users from day 1; pgvector HNSW indexing</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Market Risks</h3>
+      <table>
+        <thead><tr><th>Risk</th><th>Severity</th><th>Probability</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>Users prefer swiping</td><td><span class="tag tag-red">HIGH</span></td><td><span class="tag tag-amber">MED</span></td><td>Validate in Phase 0 interviews; backup UX plan</td></tr>
+          <tr><td>Can't differentiate from Hinge/Bumble</td><td><span class="tag tag-red">HIGH</span></td><td><span class="tag tag-amber">MED</span></td><td>Lean into psychological depth + curation + real-world outcomes</td></tr>
+          <tr><td>Dating app market saturation</td><td><span class="tag tag-amber">MED</span></td><td><span class="tag tag-red">HIGH</span></td><td>Position as anti-dating app (friendship, community, intentionality)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 20. ROADMAP -->
+    <!-- ============================================================ -->
+    <div class="section" id="roadmap">
+      <div class="section-header">
+        <span class="section-num">20</span>
+        <h2>20-Week Product Roadmap</h2>
+      </div>
+
+      <div class="card" style="border-left: 3px solid var(--sky);">
+        <h4>Phase 0: Validation (Weeks 1-4) — $15K</h4>
+        <p>Research-heavy, not engineering-heavy. Answer thesis questions before building infrastructure.</p>
+        <ul>
+          <li>Community selection finalized (Week 2)</li>
+          <li>30-50 user interviews completed</li>
+          <li>Monetization strategy validated</li>
+          <li>Claude assessment prompt v1 ready</li>
+          <li>API specification complete</li>
+          <li>Legal review (ToS, Privacy Policy)</li>
+          <li><strong>Decision gate: Go/No-Go for Phase 1</strong></li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-left: 3px solid var(--sage);">
+        <h4>Phase 1a: MVP Launch (Weeks 5-8) — $20K/mo</h4>
+        <p>Core product built and first users onboarded.</p>
+        <ul>
+          <li>Identity verification + onboarding live</li>
+          <li>AI assessment engine deployed</li>
+          <li>50 beta users recruited</li>
+          <li>Manual curation workflow active</li>
+          <li>10-15 successful introductions</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-left: 3px solid var(--coral);">
+        <h4>Phase 1b: Growth (Weeks 9-12) — $22K/mo</h4>
+        <ul>
+          <li>Scale to 100-150 users</li>
+          <li>Refine curator workflow + build curator dashboard</li>
+          <li>Collect intro feedback and iterate matching</li>
+          <li>Build Phase 2 algorithmic matching model</li>
+          <li>50+ successful introductions</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-left: 3px solid var(--indigo);">
+        <h4>Phase 2: Algorithmic Matching (Weeks 13-16) — $25K/mo</h4>
+        <ul>
+          <li>Deploy semi-automated matching with feedback loop</li>
+          <li>A/B test manual vs. algorithmic quality</li>
+          <li>Scale to 250-300 users</li>
+          <li>Analytics dashboard + fairness monitoring</li>
+          <li>CI/CD pipeline fully operational</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border-left: 3px solid var(--amber);">
+        <h4>Phase 3: Public Beta (Weeks 17-20) — $30K/mo</h4>
+        <ul>
+          <li>Open to broader cohorts</li>
+          <li>Full app feature set live</li>
+          <li>Monetization enabled (beta pricing)</li>
+          <li>500+ users, product-market fit validation</li>
+          <li>Multi-region deployment if needed</li>
+          <li><strong>Decision gate: Series A readiness</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 21. SUCCESS METRICS -->
+    <!-- ============================================================ -->
+    <div class="section" id="metrics">
+      <div class="section-header">
+        <span class="section-num">21</span>
+        <h2>Success Metrics & KPIs</h2>
+      </div>
+
+      <h3>North Star Metrics</h3>
+      <p>Circle measures success differently. <strong>NOT</strong> DAU, time-on-app, or swipe count. Instead:</p>
+      <ul>
+        <li><strong>Real-world introductions completed</strong></li>
+        <li><strong>Successful real-world meetings</strong></li>
+        <li><strong>Account pause rate</strong> (a success signal — users found someone)</li>
+        <li><strong>Referral rate</strong> (word-of-mouth, organic trust growth)</li>
+        <li><strong>Emotional satisfaction score</strong> (post-intro survey, target ≥8/10)</li>
+      </ul>
+
+      <h3>Phase 0 Validation Checklist</h3>
+      <table>
+        <thead><tr><th>Metric</th><th>Target</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Onboarding completion rate</td><td>≥ 80%</td><td><span class="tag tag-amber">Pending</span></td></tr>
+          <tr><td>Curated intros feel better than swiping</td><td>Survey confirm</td><td><span class="tag tag-amber">Pending</span></td></tr>
+          <tr><td>Users willing to pay</td><td>≥ 60%</td><td><span class="tag tag-amber">Pending</span></td></tr>
+          <tr><td>Community identification</td><td>5 viable options</td><td><span class="tag tag-amber">Pending</span></td></tr>
+          <tr><td>Intro acceptance rate</td><td>≥ 40% mutual</td><td><span class="tag tag-amber">Pending</span></td></tr>
+          <tr><td>Real meetings per 10 users</td><td>≥ 1</td><td><span class="tag tag-amber">Pending</span></td></tr>
+          <tr><td>Retention after first intro</td><td>> 60%</td><td><span class="tag tag-amber">Pending</span></td></tr>
+          <tr><td>Referral rate</td><td>≥ 5%</td><td><span class="tag tag-amber">Pending</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 22. APPENDIX -->
+    <!-- ============================================================ -->
+    <div class="section" id="appendix">
+      <div class="section-header">
+        <span class="section-num">22</span>
+        <h2>Appendix</h2>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Phase 0 Interview Framework (30 Questions)</span>
+        </div>
+        <div class="expand-body">
+          <h4>Section 1: Dating App Fatigue (7Q)</h4>
+          <p>Experience with traditional apps? What frustrates most? Have you quit? Why? What would change your mind? How do you feel about swiping? Do you trust matches? Conversations vs. real dates?</p>
+          <h4>Section 2: Self-Knowledge (6Q)</h4>
+          <p>Interested in understanding yourself? Done MBTI/Big Five/Attachment? Would you complete a 15-min assessment? Want personality insights without matches? Comfortable with AI interviewing? What makes an app "get you"?</p>
+          <h4>Section 3: Pricing (3Q)</h4>
+          <p>Would you pay for meaningful matches? What's fair price/month? Subscribe or pay-per-match?</p>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Connection Intent Taxonomy</span>
+        </div>
+        <div class="expand-body">
+          <ul>
+            <li><strong>Dating:</strong> Romantic / partner seeking</li>
+            <li><strong>Friendship:</strong> Deep friendship connections</li>
+            <li><strong>Community:</strong> Belonging, shared values</li>
+            <li><strong>Professional:</strong> Business / collaboration</li>
+            <li><strong>Self-Discovery Only:</strong> Personality insights, no matching</li>
+          </ul>
+          <p>Multi-intent widens funnel, reduces dating-app stigma, increases engagement across user types.</p>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Legal & Entity Considerations</span>
+        </div>
+        <div class="expand-body">
+          <div class="tbd">Legal entity structure TBD — LLC vs C-Corp decision pending funding strategy</div>
+          <ul>
+            <li>Domain: <code>circle.dating</code> or <code>circlematch.app</code> — <span class="tbd" style="display: inline;">TBD — check availability</span></li>
+            <li>Trademark search for "Circle" in dating/social category</li>
+            <li>Terms of Service — draft in Phase 0, legal review Week 3</li>
+            <li>Privacy Policy — GDPR/CCPA compliant, draft in Phase 0</li>
+            <li>Data Processing Agreement for third-party services (Persona, Stripe, Claude)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="expandable">
+        <div class="expand-trigger" onclick="toggleExpand(this)">
+          <span class="arrow">▶</span>
+          <span class="expand-label">Push Notification Strategy</span>
+        </div>
+        <div class="expand-body">
+          <div class="tbd">Detailed notification cadence pending — Phase 1 design sprint</div>
+          <p><strong>Principles:</strong> Respectful, never desperate. No FOMO tactics. Every notification should be genuinely useful.</p>
+          <ul>
+            <li><strong>"You have a new intro"</strong> — immediate push (this is the core value moment)</li>
+            <li><strong>"Your match accepted"</strong> — immediate push</li>
+            <li><strong>"Weekly personality insight"</strong> — scheduled, non-urgent</li>
+            <li><strong>"How did your intro go?"</strong> — 48h after intro, feedback request</li>
+            <li><strong>NEVER:</strong> "You're missing out!", "X people viewed you!", urgency manipulation</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <div style="text-align: center; padding: 40px 0; color: var(--text-tertiary); font-size: 13px;">
+        <p><strong>Project Circle — Master Blueprint v4.0</strong></p>
+        <p>May 2026 — Confidential, Internal Use Only</p>
+        <p>Designed by Greg Anthony + Markus Corvus</p>
+        <p style="margin-top: 16px; font-size: 11px;">22 sections · Engineering-grade · Design-first · Trust-centered</p>
+      </div>
+    </div>
+
+  </div> <!-- /content -->
+</div> <!-- /main -->
+
+<script>
+  // Navigation
+  function goTo(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.querySelector(`.nav-item[data-section="${id}"]`)?.classList.add('active');
+      document.getElementById('breadcrumbSection').textContent =
+        document.querySelector(`.nav-item[data-section="${id}"]`)?.textContent.trim() || '';
     }
+    // Close mobile sidebar
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+  }
 
+  // Mobile sidebar
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('open');
+  }
 
+  // Expandable sections
+  function toggleExpand(trigger) {
+    trigger.classList.toggle('open');
+    const body = trigger.nextElementSibling;
+    body.classList.toggle('open');
+  }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      initNavigation();
-      initSearch();
-      initMobileMenus();
-      
-      // Hide sidebar on mobile on initial load
-      if (window.innerWidth <= 768) {
-        document.getElementById('sidebar').classList.add('hidden-mobile');
+  // Scroll spy
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelector(`.nav-item[data-section="${id}"]`)?.classList.add('active');
+        document.getElementById('breadcrumbSection').textContent =
+          document.querySelector(`.nav-item[data-section="${id}"]`)?.textContent.trim() || '';
       }
-      
-      loadSection('summary');
     });
-  </script>
+  }, { threshold: 0.15, rootMargin: '-80px 0px -60% 0px' });
+
+  document.querySelectorAll('.section[id]').forEach(section => observer.observe(section));
+</script>
+
 </body>
 </html>
